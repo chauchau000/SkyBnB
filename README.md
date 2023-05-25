@@ -2,6 +2,7 @@
 
 ## Database Schema Design
 
+![AirBnB](https://github.com/chauchau000/AirBnB/assets/117422078/a514f4ab-dffe-45d9-8ec2-6f5c8692e3dd)
 
 
 ## API Documentation
