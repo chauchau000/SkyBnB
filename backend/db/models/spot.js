@@ -11,14 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.hasMany( models.SpotImage, { foreignKey: 'spotId', onDelete: 'CASCADE'})
-      Spot.hasMany( models.Booking, { foreignKey: 'spotId' });
-      Spot.belongsTo( models.User, { foreignKey: 'userId' })
-
+      Spot.hasMany( models.SpotImage, { onDelete: 'CASCADE'});
+      Spot.hasMany( models.Booking);
+      Spot.belongsTo( models.User, { foreignKey: 'ownerId' });
+      Spot.hasMany( models.Review, { foreignKey: 'spotId'})
     }
+
+
   };
   Spot.init({
-    userId: {
+    ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -69,13 +71,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    avgRating: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
   }, {
     sequelize,
     modelName: 'Spot',
+    defaultScope: {
+      //include all
+    },
+    scopes: {
+      basic: {
+        attributes: {
+          exclude: ['description', 'createdAt', 'updatedAt']
+        }
+      }
+    }
   });
   return Spot;
 };

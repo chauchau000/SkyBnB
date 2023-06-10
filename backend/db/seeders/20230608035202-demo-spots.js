@@ -11,7 +11,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        userId: 1,
+        ownerId: 1,
         address: '1 Disney Way',
         city: 'Anaheim',
         state: 'California',
@@ -21,10 +21,9 @@ module.exports = {
         name: 'Disneyland',
         description: 'The Happiest Place on Earth',
         price: 100,
-        avgRating: 5.0
       },
       {
-        userId: 2,
+        ownerId: 2,
         address: '400 Broad St',
         city: 'Seattle',
         state: 'Washington',
@@ -34,10 +33,9 @@ module.exports = {
         name: 'Space Needle',
         description: 'The Space Needle is an observation tower in Seattle, Washington, United States. Considered to be an icon of the city, it has been designated a Seattle landmark.',
         price: 50,
-        avgRating: 3.5
       },
       {
-        userId: 3,
+        ownerId: 3,
         address: '26101 Magic Mountain Pkwy',
         city: 'Valencia',
         state: 'California',
@@ -47,10 +45,9 @@ module.exports = {
         name: 'Six Flags Magic Mountain',
         description: 'Six Flags Magic Mountain, formerly known and colloquially referred to as simply Magic Mountain, is a 209-acre amusement park located in Valencia, California, ',
         price: 165,
-        avgRating: 4.2
       },
       {
-        userId: 1,
+        ownerId: 1,
         address: '3730 S Las Vegas Blvd',
         city: 'Las Vegas',
         state: 'Nevada',
@@ -60,7 +57,6 @@ module.exports = {
         name: 'Aria Casino',
         description: 'Aria Resort and Casino is a luxury resort and casino, and the primary property at the CityCenter complex, located on the Las Vegas Strip in Paradise, Nevada.',
         price: 255,
-        avgRating: 4.8
       },
 
     ], {});

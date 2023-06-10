@@ -27,6 +27,16 @@ module.exports = {
         spotId: 3, 
         url: 'www.spot3picture1.com',
         preview: true
+      },
+      {
+        spotId: 4, 
+        url: 'www.spot4picture1.com',
+        preview: true
+      },
+      {
+        spotId: 4, 
+        url: 'www.spot4picture2.com',
+        preview: false
       }
     ])
   },

@@ -14,7 +14,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -56,10 +56,6 @@ module.exports = {
       },
       price: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      avgRating: {
-        type: Sequelize.FLOAT,
         allowNull: false,
       },
       createdAt: {
