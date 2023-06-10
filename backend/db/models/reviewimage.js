@@ -23,13 +23,23 @@ module.exports = (sequelize, DataTypes) => {
     url: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isUrl: true
-      }
     },
   }, {
     sequelize,
     modelName: 'ReviewImage',
+    defaultScope: {
+      //include all
+      attributes: {
+        exclude: ['reviewId', 'createdAt', 'updatedAt']
+      }
+    },
+    scopes: {
+      basic: {
+        attributes: {
+          exclude: ['reviewId', 'createdAt', 'updatedAt']
+        }
+      }
+    }
   });
   return ReviewImage;
 };

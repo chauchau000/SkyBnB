@@ -2,7 +2,7 @@ const express = require('express');
 const { Op } = require('sequelize');
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { Spot, SpotImage, User, sequelize, Review } = require('../../db/models');
+const { Spot, SpotImage, User, sequelize, Review, ReviewImage } = require('../../db/models');
 
 
 const router = express.Router()
@@ -35,7 +35,7 @@ router.get('/', async (req, res, next) => {
                 }
             })
         if (image) {
-           spot.dataValues.previewImage = image.url
+            spot.dataValues.previewImage = image.url
         }
     }
 
@@ -59,18 +59,18 @@ router.get('/:spotId', async (req, res, next) => {
         //     ]
         // },
         include: [
-        {
-            model: SpotImage,
-            attributes: ['id', 'url', 'preview']
-        },
-        {
-            model: User,
-            attributes: ['id', 'firstName', 'lastName']
-        }, 
-        {
-            model: Review,
-            attributes: []
-        }
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: Review,
+                attributes: []
+            }
         ]
     });
 
@@ -141,7 +141,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         })
         return;
     } else if (!(url && preview)) {
-        const error = new Error ('url and preview are required');
+        const error = new Error('url and preview are required');
         res.statusCode = 400;
         res.json(error.message);
         return;
@@ -156,15 +156,16 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     const imageResult = await SpotImage.findOne({
         where: newImage.id,
-        attributes: ['id', 'url', 'preview']});
+        attributes: ['id', 'url', 'preview']
+    });
 
     res.json(imageResult)
 });
 
 //Edit a Spot
-router.put('/:spotId', requireAuth, async(req, res, next) => {
+router.put('/:spotId', requireAuth, async (req, res, next) => {
     const spotId = req.params.spotId;
-    const {user} = req;
+    const { user } = req;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
     const spot = await Spot.findByPk(spotId);
@@ -189,7 +190,7 @@ router.put('/:spotId', requireAuth, async(req, res, next) => {
                 description: "Description is required",
                 price: "Price per day is required"
             }
-        })        
+        })
         return;
     }
 
@@ -227,6 +228,75 @@ router.delete('/:spotId', async (req, res, next) => {
     res.json({
         message: "Successfully deleted"
     })
+});
+
+// Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spotReviews = await Review.findAll({
+        where: {
+            spotId: spotId
+        },
+        include: [
+            {
+                model: User.scope('basic')
+            },
+            {
+                model: ReviewImage.scope('basic')
+            }
+        ]
+    })
+
+    res.json({ Reviews: spotReviews })
 })
+
+router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
+    const { user } = req;
+    const spotId = req.params.spotId;
+    const { review, stars } = req.body;
+
+    const spot = await Spot.findByPk(spotId);
+    const reviewByUser = await Review.findOne({
+        where: {
+            userid: user.id,
+            spotId: spotId
+        }
+    })
+
+    if (!(review && stars)) {
+        res.statusCode = 400;
+        res.json({
+            message: "Bad Request",
+            errors: {
+                review: "Review text is required",
+                stars: "Stars must be an integer from 1 to 5"
+            }
+        })
+        return;
+    } else if (!spot) {
+        res.statusCode = 404;
+        res.json({
+            message: "Spot couldn't be found"
+        })
+        return;
+    } else if (reviewByUser) {
+        res.statusCode = 500;
+        res.json({
+            message: "User already has a review for this spot"
+        })
+    }
+
+    const newReview = Review.build({
+        userId: user.id,
+        spotId,
+        review,
+        stars
+    })
+
+    await newReview.save();
+
+    res.json(newReview)
+})
+
 
 module.exports = router;
