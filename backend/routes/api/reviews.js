@@ -75,6 +75,7 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
 
 });
 
+// Delete a Review
 router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     const { user } = req;
     const reviewId = req.params.reviewId;

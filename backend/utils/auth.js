@@ -69,11 +69,6 @@ const setTokenCookie = (res, user) => {
     return next(err);
   }
 
-  const forbidden = function (req, res, next) {
-    res.statusCode = 403;
-    res.json({
-      mesage: "Forbidden"
-    })
-  }
 
-  module.exports = { setTokenCookie, restoreUser, requireAuth, forbidden };
+
+  module.exports = { setTokenCookie, restoreUser, requireAuth };

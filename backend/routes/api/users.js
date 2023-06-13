@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { User, Spot, Review, ReviewImage, SpotImage } = require('../../db/models');
+const { User, Spot, Review, ReviewImage, SpotImage, Booking } = require('../../db/models');
 
 const router = express.Router();
 
@@ -59,7 +59,7 @@ router.get('/:userid/spots', requireAuth, async (req, res, next) => {
   const id = user.id;
   const userSpots = await Spot.findAll({
     where: {
-      userId: id
+      ownerId: id
     }
   })
 
@@ -106,6 +106,37 @@ router.get('/reviews', requireAuth, async (req, res, next) => {
     }
   }
   res.json({ Reviews: userReviews })
+});
+
+// Get all of the Current User's Bookings
+
+router.get('/bookings', requireAuth, async (req, res, next) => {
+  const { user } = req;
+  const userBookings = await Booking.findAll({
+    where: {
+      userId: user.id
+    }, 
+    include: {
+      model: Spot.scope('basic')
+    }
+  })
+
+  for (let i = 0; i < userBookings.length; i++) {
+    let userBooking = userBookings[i];
+    let spot = userBooking.Spot;
+    const image = await SpotImage.findOne(
+      {
+        where: {
+          spotId: spot.id,
+          preview: true
+        }
+      })
+    if (image) {
+      spot.dataValues.previewImage = image.url
+    }
+  }
+
+  res.json({Bookings: userBookings})
 })
 
 

@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     startDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isDate: true
       }
     },
     endDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isDate: true
@@ -40,7 +40,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'Booking',
+    modelName: 'Booking',    
+    defaultScope: {
+      //include all
+    },
+    scopes: {
+      basic: {
+        attributes: ['spotId', 'startDate', 'endDate']
+      }
+    }
   });
   return Booking;
 };
