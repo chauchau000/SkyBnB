@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 
 const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
-const { User, Spot, Review, ReviewImage, SpotImage, Booking } = require('../../db/models');
+const { User, Spot, Review, ReviewImage, SpotImage, Booking, sequelize } = require('../../db/models');
 
 const router = express.Router();
 
@@ -29,29 +29,49 @@ const validateSignup = [
 ]
 
 //SIGNUP
-router.post(
-  '/',
-  validateSignup,
-  async (req, res) => {
-    const { firstName, lastName, email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+router.post('/', validateSignup, async (req, res) => {
+  const { firstName, lastName, email, password, username } = req.body;
+  const allUsers = await User.findAll();
 
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-      user: safeUser
-    });
+  for (let i = 0; i < allUsers.length; i++) {
+    let user = allUsers[i];
+    if (user.dataValues.email === email) {
+      res.statusCode = 500;
+      res.json({
+        message: "User already exists",
+        errors: {
+          email: "User with that email already exists"
+        }
+      });
+      return;
+    } else if (user.dataValues.username === username) {
+      res.statusCode = 500;
+      res.json({
+        message: "User already exists",
+        errors: {
+          email: "User with that username already exists"
+        }
+      });
+    }
   }
-);
+
+  const hashedPassword = bcrypt.hashSync(password);
+  const newUser = await User.create({ firstName, lastName, email, username, hashedPassword });
+
+  const safeUser = {
+    id: user.id,
+    firstName: newUser.firstName,
+    lastName: newUser.lastName,
+    email: newUser.email,
+    username: newUser.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser
+  });
+});
 
 //Get all Spots owned by the Current User
 router.get('/:userid/spots', requireAuth, async (req, res, next) => {
@@ -61,7 +81,36 @@ router.get('/:userid/spots', requireAuth, async (req, res, next) => {
     where: {
       ownerId: id
     }
-  })
+  });
+
+  for (let i = 0; i < userSpots.length; i++) {
+    let spot = userSpots[i];
+    const avgRatingData = await Review.findAll({
+        where: {
+            spotId: spot.dataValues.id
+        }, 
+        attributes: {
+            include: [
+                [
+                    sequelize.fn("AVG", sequelize.col("stars")), "avgRating"
+                ]
+            ]
+        }
+    })
+
+    if (avgRatingData[0].dataValues.avgRating) {
+        spot.dataValues.avgRating = avgRatingData[0].dataValues.avgRating
+    }
+
+    const image = await SpotImage.findOne(
+        {
+            where: {
+                spotId: spot.id,
+                preview: true
+            }
+        })
+    if (image) spot.dataValues.previewImage = image.url;
+}
 
   res.json({ Spots: userSpots })
 })
@@ -115,7 +164,7 @@ router.get('/bookings', requireAuth, async (req, res, next) => {
   const userBookings = await Booking.findAll({
     where: {
       userId: user.id
-    }, 
+    },
     include: {
       model: Spot.scope('basic')
     }
@@ -136,7 +185,7 @@ router.get('/bookings', requireAuth, async (req, res, next) => {
     }
   }
 
-  res.json({Bookings: userBookings})
+  res.json({ Bookings: userBookings })
 })
 
 

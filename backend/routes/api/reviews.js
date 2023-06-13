@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 
 const { setTokenCookie, restoreUser, requireAuth, forbidden } = require('../../utils/auth');
 const { Spot, SpotImage, User, sequelize, Review, ReviewImage } = require('../../db/models');
+const { handleValidationErrors } = require ('../../utils/validation')
 
 
 const router = express.Router()
@@ -88,11 +89,8 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         });
         return;
     } else if (review.userId !== user.id) {
-        res.statusCode = 403;
-        res.json({
-          message: "Forbidden"
-        })
-        return;
+        forbidden(res);
+        return
     }
 
     await review.destroy();

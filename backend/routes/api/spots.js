@@ -1,30 +1,73 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth, forbidden, notFound } = require('../../utils/auth');
 const { Spot, SpotImage, User, sequelize, Review, ReviewImage, Booking } = require('../../db/models');
 const { dateRange } = require('../../utils/dates')
-const { handleValidationErrors } = require ('../../utils/validation')
+const { handleValidationErrors } = require('../../utils/validation')
 
 const router = express.Router()
 
 
 //GET ALL SPOTS // need to put in aggregate data
 router.get('/', async (req, res, next) => {
+
+    let page;
+    let size;
+    if (req.query.page === undefined) {
+        page = 1
+    } else {
+        page = parseInt(req.query.page);
+        if (page > 10) page = 10;
+        if (page < 1) {
+            res.statusCode = 400;
+            res.json({
+                message: "Bad Request",
+                errors: {
+                    page: "Page must be greater than or equal to 1",
+                    size: "Size must be greater than or equal to 1"
+                }
+            });
+            return
+        };
+    }
+
+    if (req.query.size === undefined) {
+        size = 1
+    } else {
+        size = parseInt(req.query.size);
+        if (size > 20) size = 20;
+        if (size < 1) {
+            res.statusCode = 400;
+            res.json({
+                message: "Bad Request",
+                errors: {
+                    page: "Page must be greater than or equal to 1",
+                    size: "Size must be greater than or equal to 1"
+                }
+            });
+            return
+        }
+    }
+
+    let pagination = {
+        limit: size,
+        offset: size * (page - 1)
+    }
+
     const allSpots = await Spot.findAll({
-        // attributes: {
-        //     include: [
-        //         [
-        //             sequelize.fn("AVG", sequelize.col("Reviews.stars")), 
-        //             "avgRating"
-        //         ]
-        //     ],
-        // },
-        // include: {
-        //     model: Review,
-        //     attributes: []
-        // }
+        include: { model: Review, attributes: [] },
+        attributes: {
+            include: [
+                [
+                    sequelize.fn("AVG", sequelize.col("stars")), "avgRating"
+                ]
+            ]
+        },
+        group: ["Spot.id"],
+        pagination
     });
+
 
     for (let i = 0; i < allSpots.length; i++) {
         let spot = allSpots[i];
@@ -35,30 +78,24 @@ router.get('/', async (req, res, next) => {
                     preview: true
                 }
             })
-        if (image) {
-            spot.dataValues.previewImage = image.url
-        }
+        if (image) spot.dataValues.previewImage = image.url;
     }
 
-    res.json({ Spots: allSpots })
+    res.json({ Spots: allSpots, page, size })
 })
 
-//Get details of a Spot from an id // need to alias the assocaition between user and spot (to owner)
+//Get details of a Spot from an id // 
 router.get('/:spotId', async (req, res, next) => {
     const id = req.params.spotId;
-    const spot = await Spot.findOne({
-        where: {
-            ownerId: id
-        },
-        // attributes: {
-        //     include: [
-        //         [
-        //             sequelize.fn("AVG", sequelize.col("Reviews.stars")), 
-        //             "avgStarRating"
-        //         ]
-
-        //     ]
-        // },
+  
+    const spot = await Spot.findByPk(id); 
+    
+    if (!spot) {
+        notFound(res, "Spot");
+        return;
+    }
+    
+    const spotResult = await Spot.findByPk(id, {
         include: [
             {
                 model: SpotImage,
@@ -73,17 +110,23 @@ router.get('/:spotId', async (req, res, next) => {
                 model: Review,
                 attributes: []
             }
-        ]
+        ],
+        attributes: {
+            include: [
+                [
+                    sequelize.fn("COUNT", sequelize.col("Reviews.id")),
+                    "numReviews"
+                ],
+                [
+                    sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+                    "avgStarRating"
+                ],
+            ]
+        },
     });
 
-    if (!spot) {
-        res.statusCode = 404;
-        res.json({
-            "message": "Spot couldn't be found"
-        })
-    }
+    res.json(spotResult);
 
-    res.json(spot)
 })
 
 //CREATE A SPOT  
@@ -311,7 +354,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 
     if (!spot) {
         res.statusCode = 404;
-        res.json( {
+        res.json({
             message: "Spot couldn't be found"
         });
         return;
@@ -321,25 +364,25 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 spotId
             }
         })
-        res.json({Bookings: bookings})
+        res.json({ Bookings: bookings })
     } else if (spot.ownerId === user.id) {
         const bookings = await Booking.findAll({
             where: {
                 spotId
-            }, 
+            },
             include: {
                 model: User.scope('basic')
             }
         });
-        res.json({Bookings: bookings})
+        res.json({ Bookings: bookings })
     }
 });
 
 //Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
-    const { user } = req; 
+    const { user } = req;
     const { startDate, endDate } = req.body;
-    const newDates = dateRange (startDate, endDate)
+    const newDates = dateRange(startDate, endDate)
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
     const bookings = await Booking.findAll({
@@ -347,7 +390,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             spotId
         }
     });
-    
+
     let bookedDates = []
 
     for (let i = 0; i < bookings.length; i++) {
@@ -366,7 +409,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             message: "Spot couldn't be found"
         });
         return
-    } else if(spot.ownerId === user.id) { // tested
+    } else if (spot.ownerId === user.id) { // tested
         res.statusCode = 403;
         res.json({
             message: "Forbidden"
@@ -381,7 +424,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
             }
         });
         return
-    } else if (bookedDates.some( date => newDates.includes(date))) { //this is not working
+    } else if (bookedDates.some(date => newDates.includes(date))) { //this is not working
         res.statusCode = 403;
         res.json({
             message: "Sorry, this spot is already booked for the specified dates",
@@ -392,9 +435,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
         })
     }
 
-
-
-    const newBooking = Booking.build( {
+    const newBooking = Booking.build({
         spotId,
         userId: user.id,
         startDate,
@@ -406,7 +447,34 @@ router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json(newBooking)
 });
 
+router.get('/', async (req, res, next) => {
+    let query = {
+        where: {},
+        include: []
+    };
+
+    let page;
+    let size;
+    if (req.query.page === undefined) {
+        page = 1
+    } else {
+        page = parseInt(req.query.page);
+        if (page > 10) page = 10;
+        if (page < 1) page = 1;
+    }
+
+    if (req.query.size === undefined) {
+        size = 1
+    } else {
+        size = parseInt(req.query.size);
+        if (size > 20) size = 20;
+        if (size < 1) size = 1;
+    }
+
+    query.limit = size;
+    query.offset = size * (page - 1);
 
 
+});
 
 module.exports = router;
