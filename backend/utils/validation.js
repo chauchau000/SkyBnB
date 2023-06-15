@@ -66,5 +66,6 @@ const validateBooking = [
     handleValidationErrors
 ]
 
+
 module.exports = { handleValidationErrors, validateReview, validateSignup, validateBooking }
 

@@ -76,21 +76,15 @@ router.put('/:bookingId', requireAuth, validateBooking, bookingNotFound, booking
 });
 
 // Delete a booking  
-router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+router.delete('/:bookingId', requireAuth, bookingNotFound, async (req, res, next) => {
     const { user } = req;
     const bookingId = req.params.bookingId;
     const currentDate = new Date();
-
 
     const booking = await Booking.findOne({
         where: { id: bookingId },
         include: { model: Spot, attributes: ['ownerId'] }
     });
-
-    if (!booking) {
-        notFound(res, "Booking")
-        return;
-    }
 
     const ownerId = booking.dataValues.Spot.dataValues.ownerId
 
