@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.hasMany( models.SpotImage, { onDelete: 'CASCADE'});
-      Spot.hasMany( models.Booking);
+      Spot.hasMany( models.SpotImage, { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true});
+      Spot.hasMany( models.Booking, { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true});
       Spot.belongsTo( models.User, { foreignKey: 'ownerId', as: "Owner" });
-      Spot.hasMany( models.Review, { foreignKey: 'spotId'})
+      Spot.hasMany( models.Review, { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true})
     }
 
 
@@ -43,18 +43,10 @@ module.exports = (sequelize, DataTypes) => {
     lat: {
       type: DataTypes.FLOAT,
       allowNull: false,
-      validate: {
-        min: -90,
-        max: 90
-      }
     },
     lng: {
       type: DataTypes.FLOAT,
       allowNull: false,
-      validate: {
-        min: -180,
-        max: 180
-      }
     },
     name: {
       type: DataTypes.STRING,

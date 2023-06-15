@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const { setTokenCookie, restoreUser, requireAuth, forbidden } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth, forbidden, notFound } = require('../../utils/auth');
 const { Spot, SpotImage, User, sequelize, Review, ReviewImage } = require('../../db/models');
 const { handleValidationErrors } = require ('../../utils/validation')
 
@@ -30,10 +30,7 @@ router.delete('/spotImage/:imageId', requireAuth, async (req, res, next) => {
         const ownerId = image.dataValues.Spot.dataValues.ownerId
 
         if (user.id !== ownerId) {
-            res.statusCode = 403;
-            res.json({
-                message: "Forbidden"
-            })
+            forbidden(res)
             return;
         }
     
@@ -44,10 +41,7 @@ router.delete('/spotImage/:imageId', requireAuth, async (req, res, next) => {
         })
 
     } catch (error) {
-        res.statusCode = 404;
-        res.json({
-            message: "Spot Image couldn't be found"
-        });
+        notFound(res, "Spot Image")
     }
 
 });
@@ -73,10 +67,7 @@ router.delete('/reviewImage/:imageId', requireAuth, async (req, res, next) => {
         const userId = image.dataValues.Review.dataValues.userId
 
         if (user.id !== userId) {
-            res.statusCode = 403;
-            res.json({
-                message: "Forbidden"
-            })
+            forbidden(res)
             return;
         }
     
@@ -84,13 +75,11 @@ router.delete('/reviewImage/:imageId', requireAuth, async (req, res, next) => {
     
         res.json({
             message: "Successfully deleted"
-        })
+        });
 
     } catch (error) {
-        res.statusCode = 404;
-        res.json({
-            message: "Review Image couldn't be found"
-        });
+        notFound(res, "Review Image");
+        return;
     }
 
 })
