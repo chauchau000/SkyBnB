@@ -77,7 +77,7 @@ router.get('/spots', requireAuth, async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("AVG", sequelize.col("stars")), "avgRating"
+                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars"))), "avgRating"
                 ]
             ]
         }, 
