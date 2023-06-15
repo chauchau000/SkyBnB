@@ -105,7 +105,6 @@ router.get('/', async (req, res, next) => {
         pagination
     });
 
-
     for (let i = 0; i < allSpots.length; i++) {
         let spot = allSpots[i];
         const image = await SpotImage.findOne(
@@ -151,11 +150,11 @@ router.get('/:spotId', async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("COUNT", sequelize.col("stars")),
+                    sequelize.fn("ROUND", sequelize.fn("COUNT", sequelize.col("stars"))),
                     "numReviews"
                 ],
                 [
-                    sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars"))),
                     "avgStarRating"
                 ],
             ]
