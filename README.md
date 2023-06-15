@@ -1,8 +1,8 @@
 # AirBnB
 
 ## Database Schema Design
+![AirBnB (3)](https://github.com/chauchau000/AirBnB/assets/117422078/bcd8d5d5-ea2d-4c26-a018-6135b2c0937c)
 
-![AirBnB](https://github.com/chauchau000/AirBnB/assets/117422078/ca2ef529-c9ce-4414-9c02-ba4020b667ac)
 [Link to database schema](https://dbdiagram.io/d/646eda3adca9fb07c4ba8e34)
 
 ## API Documentation
@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId
+  * URL: /session/
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -94,7 +94,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /login
+  * URL: /session/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -161,7 +161,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /newUser
+  * URL: /users/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -646,7 +646,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId/reviews
+  * URL: /users/reviews
   * Body: none
 
 * Successful Response
@@ -1000,7 +1000,7 @@ Return all the bookings that the current user has made.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId/bookings
+  * URL: /users/bookings
   * Body: none
 
 * Successful Response
@@ -1340,7 +1340,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /spots/:spotId/images/:imageId
+  * URL: /images/spotImage/:imageId
   * Body: none
 
 * Successful Response
@@ -1376,7 +1376,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/:reviewId/images/:imageId
+  * URL: /images/reviewImage/:imageId
   * Body: none
 
 * Successful Response
@@ -1411,7 +1411,7 @@ Return spots filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /homes?page=1&size=20
+  * URL: /spots?page=1&size=20
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20

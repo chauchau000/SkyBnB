@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Booking, { foreignKey: 'userId'});
+      User.hasMany(models.Spot, { foreignKey: 'ownerId'});
+      User.hasMany(models.Review, { foreignKey: 'userId'})
     }
   };
   User.init({
@@ -26,11 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error ("Cannot be an email.")
-          }
-        }
       }
     },
     email: {
@@ -38,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [3, 256],
-        isEmail: true
       }
     },
     hashedPassword: {
@@ -54,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
     defaultScope: {
       attributes: {
         exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt']
+      }
+    },
+    scopes: {
+      basic: {
+        attributes: ['id', 'firstName', 'lastName']
       }
     }
   });
