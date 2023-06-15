@@ -163,7 +163,6 @@ const bookingAuth = async function ( req, res, next ) {
 
 
 const bookingConflict = async function (req, res, next) {
-  const { user } = req;
   const { startDate, endDate } = req.body;
   const spotId = req.params.spotId;
 
@@ -179,17 +178,30 @@ const bookingConflict = async function (req, res, next) {
     let existingStart = new Date(existingBooking.dataValues.startDate);
     let existingEnd = new Date(existingBooking.dataValues.endDate);
 
-    if (start >= existingStart && start <= existingEnd) {
-      const err = Error('Sorry, this spot is already booked for the specified date');
+    //new booking sandwiches old booking
+    if (start <= existingStart && end >= existingEnd) {
+      const err = Error('Sorry, this spot is already booked for the specified dates');
+      err.title = 'Invalid booking'
+      err.errors = {
+        startDate: "Start date conflicts with an existing booking",
+        endDate: "End date conflicts with an existing booking"
+      }
+      err.status = 403;
+      return next(err);
+    
+    //start date is equal to or inbetween existing booked dates
+    } else if (start >= existingStart && start <= existingEnd) {
+      const err = Error('Sorry, this spot is already booked for the specified dates');
       err.title = 'Invalid booking'
       err.errors = {
         startDate: "Start date conflicts with an existing booking",
       }
       err.status = 403;
       return next(err);
-
+    
+      //end date is equal to or inbetween existing booked dates
     } else if (end >= existingStart && end <= existingEnd) {
-      const err = Error('Sorry, this spot is already booked for the specified date');
+      const err = Error('Sorry, this spot is already booked for the specified dates');
       err.title = 'Invalid booking'
 
       err.errors = {

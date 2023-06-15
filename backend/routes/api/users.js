@@ -147,10 +147,9 @@ router.get('/reviews', requireAuth, async (req, res, next) => {
 // Get all of the Current User's Bookings
 
 router.get('/bookings', requireAuth, async (req, res, next) => {
-  const { user } = req;
   const userBookings = await Booking.findAll({
     where: {
-      userId: user.id
+      userId: req.user.id
     },
     include: {
       model: Spot.scope('basic')
