@@ -69,38 +69,39 @@ router.get('/spots', requireAuth, async (req, res, next) => {
   });
 
   if (!userSpots) {
-    res.status(404).json({message: "User doesn't have any spots"});
+    res.status(404).json({ message: "User doesn't have any spots" });
     return
   }
 
   for (let i = 0; i < userSpots.length; i++) {
     let spot = userSpots[i];
     const avgRatingData = await Review.findAll({
-        where: {
-            spotId: spot.dataValues.id
-        }, 
-        attributes: {
-            include: [
-                [
-                    sequelize.fn("AVG", sequelize.col("stars")), "avgRating"
-                ]
-            ]
-        }
+      where: {
+        spotId: spot.dataValues.id
+      },
+      attributes: {
+        include: [
+          [
+            sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars")), 2), "avgRating"
+          ]
+        ]
+      },
+      group: ['Review.id']
     })
 
     if (avgRatingData[0].dataValues.avgRating) {
-        spot.dataValues.avgRating = avgRatingData[0].dataValues.avgRating
+      spot.dataValues.avgRating = avgRatingData[0].dataValues.avgRating
     }
 
     const image = await SpotImage.findOne(
-        {
-            where: {
-                spotId: spot.id,
-                preview: true
-            }
-        })
+      {
+        where: {
+          spotId: spot.id,
+          preview: true
+        }
+      })
     if (image) spot.dataValues.previewImage = image.url;
-}
+  }
 
   res.json({ Spots: userSpots })
 })

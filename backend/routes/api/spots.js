@@ -100,7 +100,7 @@ router.get('/', validateQueries, async (req, res, next) => {
             include: { model: Review, attributes: [] },
             attributes: {
                 include: [
-                    [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
+                    [sequelize.fn("COUNT", sequelize.fn("AVG", sequelize.col("Reviews.stars")),1), "avgRating"]
                 ]
             },
             group: ['Spot.id']
