@@ -76,14 +76,10 @@ router.get('/spots', requireAuth, async (req, res, next) => {
   for (let i = 0; i < userSpots.length; i++) {
     let spot = userSpots[i];
     const avgRatingData = await Review.findAll({
-      where: {
-        spotId: spot.dataValues.id
-      },
+      where: { spotId: spot.dataValues.id },
       attributes: {
         include: [
-          [
-            sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars")), 2), "avgRating"
-          ]
+          [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars")), 2), "avgRating"]
         ]
       },
       group: ['Review.id']
@@ -94,12 +90,8 @@ router.get('/spots', requireAuth, async (req, res, next) => {
     }
 
     const image = await SpotImage.findOne(
-      {
-        where: {
-          spotId: spot.id,
-          preview: true
-        }
-      })
+      { where: { spotId: spot.id, preview: true } 
+    });
     if (image) spot.dataValues.previewImage = image.url;
   }
 

@@ -88,7 +88,6 @@ router.get('/', validateQueries, async (req, res, next) => {
         ...pagination
     });
 
-
     //set previewImage key/value pair
     for (let i = 0; i < allSpots.length; i++) {
         let spot = allSpots[i];
@@ -100,7 +99,7 @@ router.get('/', validateQueries, async (req, res, next) => {
             include: { model: Review, attributes: [] },
             attributes: {
                 include: [
-                    [sequelize.fn("COUNT", sequelize.fn("AVG", sequelize.col("Reviews.stars")),1), "avgRating"]
+                    [sequelize.fn("COUNT", sequelize.fn("AVG", sequelize.col("Reviews.stars")),2), "avgRating"]
                 ]
             },
             group: ['Spot.id']
@@ -142,11 +141,11 @@ router.get('/:spotId', async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("ROUND", sequelize.fn("COUNT", sequelize.col("stars")), 1), "numReviews"
+                    sequelize.fn("COUNT", sequelize.col("stars")), "numReviews"
                 ],
 
                 [
-                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 1), "avgStarRating"
+                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgStarRating"
                 ],
             ]
         },
