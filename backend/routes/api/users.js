@@ -68,6 +68,11 @@ router.get('/spots', requireAuth, async (req, res, next) => {
     }
   });
 
+  if (!userSpots) {
+    res.status(404).json({message: "User doesn't have any spots"});
+    return
+  }
+
   for (let i = 0; i < userSpots.length; i++) {
     let spot = userSpots[i];
     const avgRatingData = await Review.findAll({
@@ -77,12 +82,10 @@ router.get('/spots', requireAuth, async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars"))), "avgRating"
+                    sequelize.fn("AVG", sequelize.col("stars")), "avgRating"
                 ]
             ]
-        }, 
-        group: ["id"],
-
+        }
     })
 
     if (avgRatingData[0].dataValues.avgRating) {
@@ -147,9 +150,10 @@ router.get('/reviews', requireAuth, async (req, res, next) => {
 // Get all of the Current User's Bookings
 
 router.get('/bookings', requireAuth, async (req, res, next) => {
+  const { user } = req;
   const userBookings = await Booking.findAll({
     where: {
-      userId: req.user.id
+      userId: user.id
     },
     include: {
       model: Spot.scope('basic')

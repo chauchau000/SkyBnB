@@ -72,38 +72,28 @@ router.get('/', validateQueries, async (req, res, next) => {
     }
 
     let where = {}
-    if (maxLat) where.lat = {[Op.lte]: maxLat}
+    if (maxLat) where.lat = { [Op.lte]: maxLat }
     if (minLat) where.lat = { ...where.lat, [Op.gte]: minLat }
 
-    if (maxLng) where.lng = { [Op.lte]: maxLng } 
+    if (maxLng) where.lng = { [Op.lte]: maxLng }
     if (minLng) where.lng = { ...where.lng, [Op.gte]: minLng }
-    
-    if (maxPrice) where.price = {[Op.lte]: maxPrice }
-    if (minPrice) where.price = {...where.price, [Op.gte]: minPrice }
+
+    if (maxPrice) where.price = { [Op.lte]: maxPrice }
+    if (minPrice) where.price = { ...where.price, [Op.gte]: minPrice }
     // console.log("this is the where object", where)
 
-    let query = {
+    const allSpots = await Spot.findAll({
         where,
-        // include: { model: Review, attributes: [] },
-        // attributes: {
-        //     include: [
-        //         [
-        //             sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"
-        //         ]
-        //     ]
-        // },
-        // group: ["Spot.id"],
-        ...pagination //this must be spread because it needs keys of limit and offset
-    }
-    
+        order: [["id"]],
+        ...pagination
+    });
 
-    const allSpots = await Spot.findAll(query);
 
     //set previewImage key/value pair
     for (let i = 0; i < allSpots.length; i++) {
         let spot = allSpots[i];
         const image = await SpotImage.findOne(
-            { where: { spotId: spot.id, preview: true } })
+            { where: { spotId: spot.id, preview: true } });
         if (image) spot.dataValues.previewImage = image.url;
 
         const spotAvgRating = await Spot.findByPk(spot.id, {
@@ -114,9 +104,9 @@ router.get('/', validateQueries, async (req, res, next) => {
                 ]
             },
             group: ['Spot.id']
-        })
+        });
         const avgRating = spotAvgRating.dataValues.avgRating
-        console.log(spotAvgRating)
+  
         if (spotAvgRating) spot.dataValues.avgRating = avgRating;
     };
 
@@ -152,11 +142,11 @@ router.get('/:spotId', async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("COUNT", sequelize.col("stars")), "numReviews"
+                    sequelize.fn("ROUND", sequelize.fn("COUNT", sequelize.col("stars")), 1), "numReviews"
                 ],
 
                 [
-                    sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"
+                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 1), "avgStarRating"
                 ],
             ]
         },
