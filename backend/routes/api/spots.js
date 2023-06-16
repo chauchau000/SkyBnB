@@ -110,14 +110,13 @@ router.get('/', validateQueries, async (req, res, next) => {
             include: { model: Review, attributes: [] },
             attributes: {
                 include: [
-                    [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars"))),
-                    "avgStarRating"]
+                    [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
                 ]
             },
             group: ['Spot.id']
         })
         const avgRating = spotAvgRating.dataValues.avgRating
-        
+        console.log(spotAvgRating)
         if (spotAvgRating) spot.dataValues.avgRating = avgRating;
     };
 
@@ -153,13 +152,11 @@ router.get('/:spotId', async (req, res, next) => {
         attributes: {
             include: [
                 [
-                    sequelize.fn("ROUND", sequelize.fn("COUNT", sequelize.col("stars"))),
-                    "numReviews"
+                    sequelize.fn("COUNT", sequelize.col("stars")), "numReviews"
                 ],
 
                 [
-                    sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars"))),
-                    "avgStarRating"
+                    sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"
                 ],
             ]
         },
