@@ -113,6 +113,7 @@ router.get('/', validateQueries, async (req, res, next) => {
                     [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"]
                 ]
             },
+            group: ['Spot.id']
         })
         const avgRating = spotAvgRating.dataValues.avgRating
         
