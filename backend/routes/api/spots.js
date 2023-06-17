@@ -207,7 +207,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         }
     })
 
-    if (existingImage) {
+    if (existingImage && preview === true) {
         return res.status(403).json({message: "This spot already has a previewImage: true"})
     }
 
