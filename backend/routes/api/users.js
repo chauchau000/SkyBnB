@@ -73,7 +73,12 @@ router.get('/spots', requireAuth, async (req, res, next) => {
 
     const image = await SpotImage.findOne(
       { where: { spotId: spot.dataValues.id, preview: true } });
-    if (image) spot.previewImage = image.url;
+    if (image) {
+      spot.dataValues.previewImage = image.url
+    } else {
+      spot.dataValues.previewImage = null
+    };
+
 
     const spotAvgRating = await Spot.findByPk(spot.id, {
       include: { model: Review, attributes: [] },
@@ -158,7 +163,9 @@ router.get('/bookings', requireAuth, async (req, res, next) => {
       })
     if (image) {
       spot.dataValues.previewImage = image.url
-    }
+    } else {
+      spot.dataValues.previewImage = null
+    };
   }
 
   res.json({ Bookings: userBookings })

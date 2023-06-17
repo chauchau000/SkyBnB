@@ -12,20 +12,20 @@ module.exports = {
       {
         spotId: 1,
         userId: 2,
-        startDate: '2023-10-23',
-        endDate: '2023-10-25',     
+        startDate: '2023-5-23',
+        endDate: '2023-5-25',     
       },
       {
         spotId: 1,
         userId: 3,
-        startDate: '2023-11-23',
-        endDate: '2023-11-25',     
+        startDate: '2023-4-23',
+        endDate: '2023-4-25',     
       },
       {
         spotId: 2,
         userId: 1,
-        startDate: '2023-10-23',
-        endDate: '2023-10-25',     
+        startDate: '2023-5-23',
+        endDate: '2023-5-25',     
       },
       {
         spotId: 2,

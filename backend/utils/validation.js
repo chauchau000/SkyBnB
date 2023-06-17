@@ -57,9 +57,22 @@ const validateReview = [
 ]
 
 const validateBooking = [
+    check('startDate')
+        .exists({ checkFalsy: true })
+        .withMessage('State date is required'),
+    check('endDate')
+        .exists({ checkFalsy: true })
+        .withMessage("End Date is required"),
     check('endDate').custom((value, { req }) => {
-        if(new Date(value) <= new Date(req.body.startDate)) {
-            throw new Error ('endDate cannot be on or before startDate');
+        if (new Date(value) <= new Date(req.body.startDate)) {
+            throw new Error('endDate cannot be on or before startDate');
+        };
+        return true;
+    }),
+    check('startDate').custom( (value, { req }) => {
+        const currentDate = new Date();
+        if (new Date(value) <= currentDate) {
+            throw new Error('Bookings cannot be made in the past');
         };
         return true;
     }),

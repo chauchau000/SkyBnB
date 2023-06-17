@@ -93,7 +93,11 @@ router.get('/', validateQueries, async (req, res, next) => {
         let spot = allSpots[i];
         const image = await SpotImage.findOne(
             { where: { spotId: spot.id, preview: true } });
-        if (image) spot.dataValues.previewImage = image.url;
+        if (image) {
+            spot.dataValues.previewImage = image.url
+        } else {
+            spot.dataValues.previewImage = null
+        };
 
         const spotAvgRating = await Spot.findByPk(spot.id, {
             include: { model: Review, attributes: [] },
@@ -194,6 +198,17 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     } else if (spot.ownerId !== user.id) {
         forbidden(res);
         return;
+    }
+
+    const existingImage = await SpotImage.findOne({
+        where: {
+            spotId,
+            preview: true
+        }
+    })
+
+    if (existingImage) {
+        return res.status(403).json({message: "This spot already has a previewImage: true"})
     }
 
     const newImage = SpotImage.build({
