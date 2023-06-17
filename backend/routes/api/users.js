@@ -133,7 +133,9 @@ router.get('/reviews', requireAuth, async (req, res, next) => {
       })
     if (image) {
       spot.dataValues.previewImage = image.url
-    }
+    } else {
+      spot.dataValues.previewImage = null
+    };
   }
   res.json({ Reviews: userReviews })
 });
