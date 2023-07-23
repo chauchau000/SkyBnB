@@ -16,7 +16,10 @@
     justify-content: space-evenly;
     align-items: center;
     position: relative;
-    
+}
+
+.profile-button:hover {
+    box-shadow: 1px 1px 2px rgb(158, 155, 155);
 }
 
 .profile-dropdown {

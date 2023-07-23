@@ -23,14 +23,14 @@ function LoginFormPage() {
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);        }
       );
-  };
+  }
 
   return (
-    <>
+    <div className='login'>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Username or Email
+          <span>Username or Email</span>
           <input
             type="text"
             value={credential}
@@ -39,7 +39,7 @@ function LoginFormPage() {
           />
         </label>
         <label>
-          Password
+        <span>Password</span>
           <input
             type="password"
             value={password}
@@ -48,9 +48,9 @@ function LoginFormPage() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button className='login-button' type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 

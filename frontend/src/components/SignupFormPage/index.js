@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import "./SignupForm.css";
+
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -41,11 +43,11 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className='signup'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          <span>Email</span>
           <input
             type="text"
             value={email}
@@ -53,9 +55,9 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='errors'>{errors.email}</p>}
         <label>
-          Username
+        <span>Username</span>
           <input
             type="text"
             value={username}
@@ -63,9 +65,9 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className='errors'>{errors.username}</p>}
         <label>
-          First Name
+          <span>First Name</span>
           <input
             type="text"
             value={firstName}
@@ -73,9 +75,9 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className='errors'>{errors.firstName}</p>}
         <label>
-          Last Name
+          <span>Last Name</span>
           <input
             type="text"
             value={lastName}
@@ -83,9 +85,9 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className='errors'>{errors.lastName}</p>}
         <label>
-          Password
+          <span>Password</span>
           <input
             type="password"
             value={password}
@@ -93,9 +95,9 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='errors'>{errors.password}</p>}
         <label>
-          Confirm Password
+          <span>Confirm Password</span>
           <input
             type="password"
             value={confirmPassword}
@@ -103,10 +105,10 @@ function SignupFormPage() {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
+        <button type="submit" className='signup-button'>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
