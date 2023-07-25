@@ -23,7 +23,7 @@ h1 {
     padding-bottom: 12px;
 }
 
-form, label {
+.signup-label {
     display: flex;
     flex-direction: column;
     padding: 20px 10px 6px 10px;
@@ -41,12 +41,12 @@ form, label {
     color: white;
 }
 
-span {
+.signup-span {
     padding-bottom: 5px;
     font-size: 20px;
 }
 
-input {
+.signup-input {
     background-color: rgba(238, 176, 224, 0.872);
     border: solid 1px grey;
     border-radius: 10px;

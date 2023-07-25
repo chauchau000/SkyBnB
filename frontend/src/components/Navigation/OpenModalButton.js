@@ -1,16 +1,13 @@
-import { useHistory } from "react-router-dom"
+import { useState } from 'react'
+import './OpenModalButton.css'
 
-function OpenModalButton({ buttonText, setShowMenu }) {
-    const history = useHistory()
+function OpenModalButton({ buttonText, setShowMenu, modalComponent }) {
+    const [modal, setModal] = useState(false);
 
     const handleClick = () => {
-        if (buttonText === "Log In") {
-            history.push('/login')
-        } else if (buttonText === "Sign Up") {
-            history.push('/signup')
-        }   
-
-        setShowMenu(false)
+        setModal(!modal);
+        console.log(modalComponent)
+        //setShowMenu(false)
     }
 
     return (
@@ -18,7 +15,12 @@ function OpenModalButton({ buttonText, setShowMenu }) {
             <button onClick={handleClick}>
                 {buttonText}
             </button>
-
+            {modal && (<div className='modal'>
+                <div className='overlay' onClick={handleClick}></div>
+                <div className='modal-content'>
+                    {modalComponent}
+                </div>
+            </div>)}
         </>
     )
 }

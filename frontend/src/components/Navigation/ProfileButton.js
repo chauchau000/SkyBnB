@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from './OpenModalButton';
 import './ProfileButton.css';
-
+import LoginFormModal from "../LoginFormModal";
+import SignUpFormModal from '../SignUpFormModal';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -58,12 +59,15 @@ function ProfileButton({ user }) {
               <OpenModalButton
                 buttonText="Log In"
                 setShowMenu={setShowMenu}
+                modalComponent={<LoginFormModal />}
+
               />
             </li>
             <li>
               <OpenModalButton
                 buttonText="Sign Up"
                 setShowMenu={setShowMenu}
+                modalComponent={<SignUpFormModal />}
               />
             </li>
           </>
