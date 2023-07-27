@@ -73,7 +73,6 @@ function CreateNewSpot() {
             dispatch(createSpotImage(spotImage, newSpot.id)).catch(
                 async (res) => {
                     const data = await res.json();
-                    console.log(errors)
                     if (data && data.message) {
                         return setImageErrors(data.errors)
                     }

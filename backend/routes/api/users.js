@@ -19,7 +19,6 @@ router.post('/', validateSignup, async (req, res) => {
 
   for (let i = 0; i < allUsers.length; i++) {
     let user = allUsers[i];
-    console.log(user)
     if (user.dataValues.email === email) {
       res.statusCode = 500;
       res.json({

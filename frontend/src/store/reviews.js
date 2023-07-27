@@ -64,7 +64,6 @@ const reviewsReducer = (state = initialState, action) => {
         case CREATE_REVIEW:
             newState = { ...state };
             const newReview = action.payload;
-            //console.log(newState[newReview.spotId])
             if (newState[newReview.spotId]) newState[newReview.spotId].push(newReview)
             else newState[newReview.spotId] = [newReview];
             return newState

@@ -17,7 +17,8 @@ export const spots = () => async dispatch => {
     if (res.ok) {
         dispatch(getAllSpots(data));
     } else {
-        console.log(data)
+        const errors = await res.json();
+        return errors
     }
 }
 
@@ -37,7 +38,10 @@ export const spotDetails = (spotId) => async dispatch => {
     
     if (res.ok) {
         dispatch(getSpotDetails(data));
-    } 
+    } else {
+        const errors = await res.json();
+        return errors
+    }
 }
 
 //Create new spot

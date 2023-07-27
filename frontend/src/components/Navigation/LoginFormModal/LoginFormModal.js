@@ -23,7 +23,6 @@ function LoginFormModal() {
         const data = await res.json();
         if (data && data.message) {
           setErrors(data)
-          console.log(errors)
         };
       }
     );
