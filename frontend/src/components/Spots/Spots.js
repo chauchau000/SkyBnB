@@ -22,20 +22,20 @@ function Spots() {
         const handleMouseMove = (e) => {
             let x = e.clientX;
             let y = e.clientY;
-            document.getElementById(`spot-id-${spot.id}`).style.left = (x +10) + "px";
-            document.getElementById(`spot-id-${spot.id}`).style.top = (y+10) + "px";
+            document.getElementById(`spot-id-${spot?.id}`).style.left = (x +10) + "px";
+            document.getElementById(`spot-id-${spot?.id}`).style.top = (y+10) + "px";
         }
 
         return (
-            <li key={spot.id} className='flex-item'>
-                <Link to={`/spots/${spot.id}`}>
+            <li key={spot?.id} className='flex-item'>
+                <Link to={`/spots/${spot?.id}`}>
                     <div className='img-container' onMouseMove={(handleMouseMove)}>
-                        <img src={spot.previewImage} alt={spot.name} width='300px' height='300px' />
-                        <div className='tooltip' id={`spot-id-${spot?.id}`}>{spot.name}</div>
+                        <img src={spot?.previewImage} alt={spot?.name} width='300px' height='300px' />
+                        <div className='tooltip' id={`spot-id-${spot?.id}`}>{spot?.name}</div>
                     </div>
                 </Link>
-                <p>{spot.city}, {spot.state} <span><i className="fa-solid fa-star"></i> {spot.avgRating}</span></p>
-                <p><span id='spot-price'> ${spot.price} </span> night</p>
+                <p>{spot?.city}, {spot?.state} <span><i className="fa-solid fa-star"></i> {spot?.avgRating}</span></p>
+                <p><span id='spot-price'> ${spot?.price} </span> night</p>
             </li>
         )
     })
