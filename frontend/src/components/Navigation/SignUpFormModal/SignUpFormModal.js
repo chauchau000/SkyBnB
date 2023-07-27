@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from '../../../store/session'
+import "./SignUpFormModal.css";
 
-function SignupFormPage() {
+
+function SignUpFormModal() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -41,73 +43,73 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className='signup'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
+        <label className='signup-label'>
+          <span className='signup-span'>Email</span>
+          <input className='signup-input'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-          <input
+        {errors.email && <p className='errors'>{errors.email}</p>}
+        <label className='signup-label'>
+        <span className='signup-span'>Username</span>
+        <input className='signup-input'
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
-          <input
+        {errors.username && <p className='errors'>{errors.username}</p>}
+        <label className='signup-label'>
+          <span className='signup-span'>First Name</span>
+          <input className='signup-input'
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
-          <input
+        {errors.firstName && <p className='errors'>{errors.firstName}</p>}
+        <label className='signup-label'>
+          <span className='signup-span'>Last Name</span>
+          <input className='signup-input'
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
-          <input
+        {errors.lastName && <p className='errors'>{errors.lastName}</p>}
+        <label className='signup-label'>
+          <span className='signup-span'>Password</span>
+          <input className='signup-input'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
-          <input
+        {errors.password && <p className='errors'>{errors.password}</p>}
+        <label className='signup-label'>
+          <span className='signup-span'>Confirm Password</span>
+          <input className='signup-input'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
+        <button type="submit" className='signup-button'>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
-export default SignupFormPage;
+export default SignUpFormModal;

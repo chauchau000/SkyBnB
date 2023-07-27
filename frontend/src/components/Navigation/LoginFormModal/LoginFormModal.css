@@ -1,0 +1,77 @@
+.login-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 25px;
+    z-index: 1000;
+    box-sizing: border-box;
+    border: solid 2px rgb(202, 140, 150);
+    border-radius: 50px;
+    box-shadow: 5px 5px 5px rgb(168, 161, 161);
+}
+
+h1, form {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-container > h1 {
+    text-align: center;
+    padding-bottom: 12px;
+}
+
+.login-labels {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-size: 20px;
+
+}
+
+.login-button {
+    display: block;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 10px;
+    width: 150px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: rgb(254, 85, 85);
+    color: white;
+}
+
+.login-button:disabled {
+    background-color: rgb(254, 85, 85, 0.5);;
+}
+
+.login-span {
+    padding-bottom: 10px;
+}
+
+.login-inputs {
+    background-color: rgba(238, 176, 224, 0.872);
+    border: solid 1px grey;
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 8px;
+    size: 150px;
+}
+
+.errors {
+    color: red;
+    font-size: 10px;
+}
+
+.demo-user {
+    display: block;
+    padding-top: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: underline;
+    font-size: 16px;
+    border: none;
+    background-color: white;
+    margin: auto;
+}
+

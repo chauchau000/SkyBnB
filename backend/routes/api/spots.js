@@ -34,16 +34,36 @@ const validateSpot = [
         .withMessage("Longitude is not valid"),
     check('name')
         .exists({ checkFalsy: true })
-        .isLength({ max: 50 })
-        .withMessage("Name must be less than 50 characters"),
+        // .isLength({ max: 50 })
+        .withMessage("Name is required"),
     check('description')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .isLength({ min: 30 })
+        .withMessage('Description needs a minimum of 30 characters'),
     check('price')
         .exists({ checkFalsy: true })
-        .withMessage('Price per day is required'),
+        .withMessage('Price is required'),
     handleValidationErrors
 ]
+
+const validateImage = [
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Preview image is required'),
+    check('url')
+        .custom(value => {
+            let check = false;
+            if (value.endsWith('.png')) check = true;
+            if (value.endsWith('.jpeg')) check = true;
+            if (value.endsWith('.jpg')) check = true
+            if (!check) {
+                throw new Error("Image URL must end with .png, .jpg, or .jpeg")
+            } else { return true}
+            
+        }),
+    handleValidationErrors
+]
+
 
 
 //GET ALL SPOTS 
@@ -103,13 +123,13 @@ router.get('/', validateQueries, async (req, res, next) => {
             include: { model: Review, attributes: [] },
             attributes: {
                 include: [
-                    [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")),2), "avgRating"]
+                    [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("Reviews.stars")), 2), "avgRating"]
                 ]
             },
             group: ['Spot.id']
         });
         const avgRating = spotAvgRating.dataValues.avgRating
-  
+
         if (spotAvgRating) spot.dataValues.avgRating = avgRating;
     };
 
@@ -186,7 +206,7 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 });
 
 //Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+router.post('/:spotId/images', requireAuth, validateImage, async (req, res, next) => {
     const spotId = req.params.spotId;
     const { url, preview } = req.body;
     const { user } = req;
@@ -208,7 +228,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     })
 
     if (existingImage && preview === true) {
-        return res.status(403).json({message: "This spot already has a previewImage: true"})
+        return res.status(403).json({ message: "This spot already has a previewImage: true" })
     }
 
     const newImage = SpotImage.build({
@@ -293,7 +313,12 @@ router.get('/:spotId/reviews', spotNotFound, async (req, res, next) => {
             {
                 model: ReviewImage.scope('basic')
             }
+        ],
+        order: [
+
+            ['createdAt', 'DESC']
         ]
+        
     })
 
     res.json({ Reviews: spotReviews })

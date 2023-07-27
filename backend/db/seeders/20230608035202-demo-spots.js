@@ -12,50 +12,50 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         ownerId: 1,
-        address: '1 Disney Way',
-        city: 'Anaheim',
+        address: '123 Huckleberry Lane',
+        city: 'Beverly Hills',
         state: 'California',
         country: 'USA',
         lat: 33.8121,
         lng: -117.9190,
-        name: 'Disneyland',
-        description: 'The Happiest Place on Earth',
+        name: 'AirBnB Spot #1',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra. Amet facilisis magna etiam tempor orci. Aliquet eget sit amet tellus cras adipiscing enim eu. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Tristique sollicitudin nibh sit amet commodo. Interdum posuere lorem ipsum dolor. Sit amet mattis vulputate enim nulla aliquet porttitor. Blandit libero volutpat sed cras ornare.',
         price: 100,
       },
       {
         ownerId: 2,
-        address: '400 Broad St',
+        address: '456 Strawberry Park',
         city: 'Seattle',
         state: 'Washington',
         country: 'USA',
         lat: 54.545,
         lng: -164.190,
-        name: 'Space Needle',
-        description: 'The Space Needle is an observation tower in Seattle, Washington, United States. Considered to be an icon of the city, it has been designated a Seattle landmark.',
+        name: 'AirBnB Spot #2',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra. Amet facilisis magna etiam tempor orci. Aliquet eget sit amet tellus cras adipiscing enim eu. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Tristique sollicitudin nibh sit amet commodo. Interdum posuere lorem ipsum dolor. Sit amet mattis vulputate enim nulla aliquet porttitor. Blandit libero volutpat sed cras ornare.',
         price: 50,
       },
       {
         ownerId: 3,
-        address: '26101 Magic Mountain Pkwy',
-        city: 'Valencia',
+        address: '789 Watermelon Circle',
+        city: 'Irvine',
         state: 'California',
         country: 'USA',
         lat: 38.8121,
         lng: -137.9190,
-        name: 'Six Flags Magic Mountain',
-        description: 'Six Flags Magic Mountain, formerly known and colloquially referred to as simply Magic Mountain, is a 209-acre amusement park located in Valencia, California, ',
+        name: 'AirBnB Spot #3',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra. Amet facilisis magna etiam tempor orci. Aliquet eget sit amet tellus cras adipiscing enim eu. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Tristique sollicitudin nibh sit amet commodo. Interdum posuere lorem ipsum dolor. Sit amet mattis vulputate enim nulla aliquet porttitor. Blandit libero volutpat sed cras ornare.',        
         price: 165,
       },
       {
         ownerId: 1,
-        address: '3730 S Las Vegas Blvd',
-        city: 'Las Vegas',
-        state: 'Nevada',
+        address: '123 Fuji Apple Lane',
+        city: 'Malibu',
+        state: 'California',
         country: 'USA',
         lat: 15.8121,
         lng: -65.5590,
-        name: 'Aria Casino',
-        description: 'Aria Resort and Casino is a luxury resort and casino, and the primary property at the CityCenter complex, located on the Las Vegas Strip in Paradise, Nevada.',
+        name: 'AirBnB Spot #4',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra. Amet facilisis magna etiam tempor orci. Aliquet eget sit amet tellus cras adipiscing enim eu. Quam elementum pulvinar etiam non quam lacus suspendisse faucibus. Tristique sollicitudin nibh sit amet commodo. Interdum posuere lorem ipsum dolor. Sit amet mattis vulputate enim nulla aliquet porttitor. Blandit libero volutpat sed cras ornare.',        
         price: 255,
       },
 
@@ -66,7 +66,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Disneyland', 'Space Needle', 'Six Flags Magic Mountain', 'Aria Casino'] }
+      name: { [Op.in]: ['AirBnB Spot #1', 'AirBnB Spot #2', 'AirBnB Spot #3', 'AirBnB Spot #4'] }
     }, {});
   }
 };
