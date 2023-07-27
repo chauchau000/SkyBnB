@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { spots } from "../../store/spots";
 import { Link } from "react-router-dom";
 import './Spots.css'
