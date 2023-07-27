@@ -45,7 +45,7 @@ function SpotDetails() {
                     <p className='review-user-firstName'>{review.User?.firstName}</p>
                     <p className='review-date'>{getMonthName(monthNum)} {year}</p>
                     <p className='review-description'>{review?.review}</p>
-                    {sessionUser.id === review.User?.id && <button>Delete</button>}
+                    {sessionUser?.id === review?.User?.id && <button>Delete</button>}
                 </div>
             )
         })
