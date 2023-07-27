@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from 'react';
 import { spots } from "../../store/spots";
 import { Link } from "react-router-dom";
-import './Spots.css'
+import './spots.css'
 
 function Spots() {
     const dispatch = useDispatch();
