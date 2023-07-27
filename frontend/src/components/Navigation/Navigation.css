@@ -12,6 +12,8 @@
 .right-side {
     display: flex;
     align-items: center;
+    position: relative;
+
 }
 
 .right-side li {
@@ -57,7 +59,9 @@ a {
     font-size: 20px;
 }
 
-
+li .home, #create-new-spot {
+    cursor: pointer
+}
 
 /* button {
     background-color: white;

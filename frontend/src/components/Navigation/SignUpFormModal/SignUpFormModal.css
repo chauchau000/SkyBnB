@@ -1,8 +1,7 @@
-.login-container {
+.signup {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 400px;
     transform: translate(-50%,-50%);
     background-color: white;
     padding: 25px;
@@ -11,41 +10,44 @@
     border: solid 2px rgb(202, 140, 150);
     border-radius: 50px;
     box-shadow: 5px 5px 5px rgb(168, 161, 161);
+    width: 500px;
 }
+
 
 h1, form {
     font-family: 'Montserrat', sans-serif;
 }
 
-h1 {
+.signup > h1 {
     text-align: center;
     padding-bottom: 12px;
 }
 
-.login-labels {
+.signup-label {
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    font-size: 20px;
+    padding: 20px 10px 6px 10px;
 
 }
 
-.login-button {
+.signup-button {
+    display: block;
     margin-right:auto;
     margin-left:auto;
-    margin-top: 10px;
+    margin-top: 20px;
     width: 150px;
-    padding: 5px;
+    padding: 8px;
     font-size: 20px;
-    background-color: rgb(254, 85, 85);
+    background-color: rgb(103, 103, 240);
     color: white;
 }
 
-.login-span {
-    padding-bottom: 10px;
+.signup-span {
+    padding-bottom: 5px;
+    font-size: 16px;
 }
 
-.login-inputs {
+.signup-input {
     background-color: rgba(238, 176, 224, 0.872);
     border: solid 1px grey;
     border-radius: 10px;
@@ -56,15 +58,6 @@ h1 {
 
 .errors {
     color: red;
-    font-size: 10px;
+    font-size: 14px;
+    padding-left: 10px; 
 }
-
-.demo-user {
-    padding-top: 20px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-decoration: underline;
-    font-size: 16px;
-    border: none;
-    
-}
-

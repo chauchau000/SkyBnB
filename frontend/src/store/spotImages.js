@@ -10,7 +10,7 @@ const postSpotImage = (spotImage) => {
 }
 
 export const createSpotImage = (image, spotId) => async dispatch => {
-    const res = await csrfFetch(`spots/${spotId}/images`, {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(image)

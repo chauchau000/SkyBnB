@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from '../../../store/session'
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./LoginFormModal.css";
@@ -12,7 +12,7 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/" />; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +21,10 @@ function LoginFormModal() {
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        if (data && data.message) setErrors(data);
+        if (data && data.message) {
+          setErrors(data)
+          console.log(errors)
+        };
       }
     );
   }
@@ -31,9 +34,11 @@ function LoginFormModal() {
     setPassword('password')
   }
 
+
   return (
     <div className='login-container'>
       <h1>Log In</h1>
+      {errors.title && <p>{errors.title}</p>}
       <form onSubmit={handleSubmit}>
         <label className='login-labels'>
           <span className='login-span'>Username or Email</span>
@@ -57,8 +62,8 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button className='login-button' type="submit">Log In</button>
-        {errors.title && <p>{errors.title}</p>}
+        <button className={`login-button`} type="submit" disabled={credential.length < 4 || password.length < 6} >Log In</button>
+        
         <button className='demo-user' type='submit' onClick={demoUserLogin}>Demo User</button>
       </form>
     </div>

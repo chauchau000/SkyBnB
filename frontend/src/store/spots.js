@@ -62,7 +62,7 @@ export const createNewSpot = (spot) => async dispatch => {
         dispatch(postNewSpot(data));
         return data
     } else {
-        const errors = res.json();
+        const errors = await res.json();
         return errors
     }
 }

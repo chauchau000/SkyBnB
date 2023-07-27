@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
         <NavLink exact to="/"><i className="fa-solid fa-house"></i>airbnb</NavLink>
       </li>
       <div className='right-side'>
-        {sessionUser && <li><NavLink exact to='/spots/new'>Create a New Spot </NavLink> </li>}
+        {sessionUser && <li id='create-new-spot'><NavLink exact to='/spots/new'>Create a New Spot </NavLink> </li>}
         {isLoaded && (
           <li>
             <ProfileButton user={sessionUser} />

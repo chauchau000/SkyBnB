@@ -6,13 +6,15 @@ function OpenModalButton({ buttonText, setShowMenu, modalComponent }) {
 
     const handleClick = () => {
         setModal(!modal);
-        console.log(modalComponent)
+
         //setShowMenu(false)
     }
 
+    
+
     return (
-        <>
-            <button onClick={handleClick}>
+        <div className='button-container' onClick={() => {if(modal===false) setModal(true)}}>
+            <button className='modal-button' onClick={handleClick}>
                 {buttonText}
             </button>
             {modal && (<div className='modal'>
@@ -21,7 +23,7 @@ function OpenModalButton({ buttonText, setShowMenu, modalComponent }) {
                     {modalComponent}
                 </div>
             </div>)}
-        </>
+        </div>
     )
 }
 

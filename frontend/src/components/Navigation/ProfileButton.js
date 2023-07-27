@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from './OpenModalButton';
 import './ProfileButton.css';
-import LoginFormModal from "../LoginFormModal";
-import SignUpFormModal from '../SignUpFormModal';
+import LoginFormModal from "./LoginFormModal/LoginFormModal";
+import SignUpFormModal from './SignUpFormModal/SignUpFormModal';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  const ulClassName = (showMenu ? "profile-dropdown"  : " hidden");
+  const ulClassName = (showMenu ? "profile-dropdown" : " hidden");
 
   return (
     <div className='outer-div'>
@@ -46,25 +46,29 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello, {user.username}</li>
             <li>{user.email}</li>
+            <li id="manage-spots-button-container">
+              <button id='manage-spots-button'>Manage Spots</button>
+            </li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button id='logout-button' onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
-            <li>
+            <li className='button-container li-1-container'>
               <OpenModalButton
+                className='modal-button'
                 buttonText="Log In"
                 setShowMenu={setShowMenu}
                 modalComponent={<LoginFormModal />}
 
               />
             </li>
-            <li>
+            <li className='button-container li-2-container'>
               <OpenModalButton
+                className='modal-button'
                 buttonText="Sign Up"
                 setShowMenu={setShowMenu}
                 modalComponent={<SignUpFormModal />}

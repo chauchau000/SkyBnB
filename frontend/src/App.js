@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import LoginFormModal from "./components/LoginFormPage";
 import * as sessionActions from "./store/session";
-import SignUpFormModal from "./components/SignUpFormModal";
+import LoginFormModal from "./components/Navigation/LoginFormModal/LoginFormModal";
+import SignUpFormModal from "./components/Navigation/SignUpFormModal/SignUpFormModal";
 import Navigation from "./components/Navigation";
-import Spots from "./components/Spots";
-import SpotDetails from "./components/SpotDetails";
-import CreateNewSpot from "./components/CreateNewSpot";
+import Spots from "./components/Spots/Spots";
+import SpotDetails from "./components/SpotDetails/SpotDetails";
+import CreateNewSpot from "./components/CreateNewSpot/CreateNewSpot";
 
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
             <CreateNewSpot />
           </Route>
           <Route path='/spots/:spotId'>
-            <SpotDetails />
+            <SpotDetails isLoaded = { isLoaded }/>
           </Route>
           <Route exact path="/">
             <Spots />
