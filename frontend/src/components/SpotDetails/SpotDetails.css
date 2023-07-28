@@ -2,30 +2,158 @@
     font-family: 'Montserrat', sans-serif;
     padding: 0px;
     margin: 0px;
-    
     box-sizing: border-box;
 }
 
 .outer-div {
     max-width: 1000px;
+    padding: 20px 40px;
+    margin: auto;
 }
 
+#location-container {
+    font-size: 14px;
+}
+
+#spot-details-img-container {
+    max-width: 100%;
+    height: 400px;
+    display: grid;
+    grid-template-areas:
+        "img1 img2 img3"
+        "img1 img4 img5";
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
 .house-images {
-    width: 100px;
-    height: 100px
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+.preview-false {
+    width: 226px;
+    height: 199px;
+}
+
+#house-img-1 {
+    width: 458px;
+    height: 398px;
+    grid-area: img1;
+
+}
+
+#house-img-2 {
+    grid-area: img2;
+}
+
+#house-img-3 {
+    grid-area: img3;
+}
+
+#house-img-4 {
+    grid-area: img4;
+}
+
+#house-img-5 {
+    grid-area: img5;
+}
+
+#home-details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    padding: 10px 0;
+}
+
+#hosted-by {
+    font-size: 24px;
+}
+
+.text-paragraphs {
+    font-size: 14px;
+    padding: 10px 10px 10px 0;
+}
+
+#price-reviews-container {
+    display: block;
+    border: 3px solid black;
+    border-radius: 20px;
+    height: 120px;
+    padding: 15px 20px 20px 20px;
+}
+
+#price-review-inline-block {
+    position: relative;
+    margin-bottom: 10px;
+    
+}
+#price-review-inline-block .price-tag {
+    font-size: 26px;
+    font-weight: 500;
+}
+#price-review-inline-block p {
+    display: inline-block;
+    font-size: 18px;
+}
+
+#price-review-inline-block .rating-reviews {
+    font-size: 14px;
+    text-align: right;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+}
+
+button#reserve {
+    display: block;
+    margin: auto;
+    width: 260px;
+    border-radius: 5px;
+    height: 40px;
+    
+    box-shadow: 1px 1px black;
+    font-weight: 500;
+    background-color: red;
+    color: white;
 }
 
 .review-container {
     border-top: 2px solid black;
-    padding: 10px;
+    padding: 10px 0;
 }
 
-.review-container h2 span{
-    font-size: 25px;
-}
 
 .review-item-container {
-    padding: 20px;
+    padding: 20px 0;
 }
 
+.review-container h2 span {
+    font-size: 24px;
+}
+.review-container h2 {
+    padding: 5px 0;
+}
+
+#dot-span {
+    padding: 0 6px;
+}
+
+.review-user-firstName {
+    padding: 5px 0;
+    font-size: 16px;
+}
+
+.review-date {
+    font-size: 15.5px;
+    color: grey
+}
+
+.review-description {
+    padding: 10px 0;
+    font-size: 10pt;
+}
 

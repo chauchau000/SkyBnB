@@ -18,14 +18,16 @@ function LoginFormModal() {
     e.preventDefault();
     setErrors({});
 
-    return dispatch(sessionActions.login({ credential, password })).catch(
+    dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
         if (data && data.message) {
           setErrors(data)
         };
       }
-    );
+    )
+
+    // dispatch(sessionActions.getUserSpots());
   }
 
   const demoUserLogin = (e) => {

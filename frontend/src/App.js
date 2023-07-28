@@ -8,7 +8,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Spots from "./components/Spots/Spots";
 import SpotDetails from "./components/SpotDetails/SpotDetails";
 import CreateNewSpot from "./components/CreateNewSpot/CreateNewSpot";
-import ManageSpots from "./components/ManageSpots/ManageSpots";
+import ManageSpots from "./components/Spots/ManageSpots/ManageSpots";
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
             <SpotDetails />
           </Route>
           <Route path='/user/spots'>
-            <ManageSpots />
+            <ManageSpots isLoaded={isLoaded}/>
           </Route>
           <Route exact path="/">
             <Spots />

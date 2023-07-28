@@ -26,7 +26,7 @@ module.exports = {
       },
       {
         spotId: 1,
-        url: 'https://www.pellabranch.com/windows-doors/inspiration/favorite-backyard-ideas/',
+        url: 'https://www.thespruce.com/thmb/BnQpJN5DuH4OVRdi8Pmmrak257c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/SPR-modern-kitchen-ideas-7110474-hero-e78cb87316b847fb87fe807ffd4a0921.jpg',
         preview: false
       },
       {
@@ -37,7 +37,7 @@ module.exports = {
       //Spot 2
       {
         spotId: 2,
-        url: 'https://www.architectureartdesigns.com/wp-content/uploads/2017/07/15-Compelling-Contemporary-Exterior-Designs-Of-Luxury-Homes-Youll-Love-2-630x832.jpg',
+        url: 'https://www.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg',
         preview: true
       },
       {
@@ -104,12 +104,12 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: 'https://i.pinimg.com/736x/7a/df/51/7adf51422e10f67a99f5e8304c002e69.jpg',
+        url: 'https://st.hzcdn.com/simgs/pictures/pools/alamo-hillside-modern-home-and-pool-creative-environments-img~17a13049026feeca_14-7351-1-85ed597.jpg',
         preview: false
       },
       {
         spotId: 4,
-        url: 'https://cdn.homedit.com/wp-content/uploads/2019/10/Landscape-backyard-idea-cheese-board-on-grass.jpg',
+        url: 'https://cdn.homedit.com/wp-content/uploads/2021/03/Gorgeous-Infinity-Pool-with-mulitple-outdoor-living-spaces.jpg',
         preview: false
       }
     ])

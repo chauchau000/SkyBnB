@@ -1,0 +1,80 @@
+
+.flex-item {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.flex-item .spot-tile-img {
+    border-radius: 20px;
+}
+
+.img-container .spot-tile-img {
+    cursor: pointer
+}
+
+.img-container {
+    width: 300px;
+    height: 300px;
+    background-color: lightgrey;
+    border-radius: 20px;
+    margin: 10px 0 7px 0;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0;
+    transition: box-shadow 50ms linear;
+
+}
+
+.spot-tile-img {
+    width: 300px;
+    height: 300px;
+}
+
+#spot-price {
+    font-size: 17px;
+    font-weight: 500
+}
+
+.price-container {
+    font-size: 14px;
+    padding: 4px;
+}
+.state-stars-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+}
+
+.state-stars {
+    font-size: 14px;
+
+}
+
+
+
+/* CAREFUL WHEN TOUCHING THESE */
+.img-container:hover, .flex-item img:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.tooltip {
+    opacity: 0;
+    position: fixed;
+    background-color: rgba(132, 132, 132, 0.828);
+    color: white;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.img-container:hover .tooltip {
+    opacity: 1
+}
+
+.flex-item img:hover .tooltip {
+    opacity: 1
+}

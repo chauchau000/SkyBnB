@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { createNewSpot } from '../../store/spots'
 import { createSpotImage } from '../../store/spotImages';
 import "./CreateNewSpot.css";
@@ -10,13 +10,11 @@ import "./CreateNewSpot.css";
 function CreateNewSpot() {
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const [country, setCountry] = useState('')
     const [address, setAddress] = useState('')
     const [city, setCity] = useState('')
     const [state, setState] = useState('')
-    const [lat, setLatitude] = useState('')
-    const [lng, setLongitude] = useState('')
     const [description, setDescription] = useState('')
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
@@ -26,60 +24,74 @@ function CreateNewSpot() {
     const [url4, setUrl4] = useState('')
     const [url5, setUrl5] = useState('')
     const [errors, setErrors] = useState({});
-    const [imageErrors, setImageErrors] = useState({})
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
+    useEffect(() => {
+        const errors = {};
+
+        if (!country.length) errors.country = 'Country is required';
+        if (!address.length) errors.address = 'Street address is required';
+        if (!city.length) errors.city = 'City is required';
+        if (!state.length) errors.state = 'State is required';
+        if (description.length < 30) errors.description = 'Description needs a minimum of 30 characters';
+        if (!name.length) errors.name = 'Name is required';
+        if (!price) errors.price = 'Price is required';
+        if (!previewImage.length) errors.urlRequired = 'Preview image is required';
+        if (previewImage && !previewImage.endsWith('.png') && !previewImage.endsWith('.jpeg') && !previewImage.endsWith('.jpg')) errors.url = 'Image URL must end with .png, .jpg, or .jpeg';
+        if (url2 && !url2.endsWith('.png') && !url2.endsWith('.jpeg') && !url2.endsWith('.jpg')) errors.url2 = 'Image URL must end with .png, .jpg, or .jpeg';
+        if (url3 && !url3.endsWith('.png') && !url3.endsWith('.jpeg') && !url3.endsWith('.jpg')) errors.url3 = 'Image URL must end with .png, .jpg, or .jpeg';
+        if (url4 && !url4.endsWith('.png') && !url4.endsWith('.jpeg') && !url4.endsWith('.jpg')) errors.url4 = 'Image URL must end with .png, .jpg, or .jpeg';
+        if (url5 && !url5.endsWith('.png') && !url5.endsWith('.jpeg') && !url5.endsWith('.jpg')) errors.url5 = 'Image URL must end with .png, .jpg, or .jpeg';
+
+        setErrors(errors)
+
+    }, [country, address, city, state, description, name, price, previewImage, url2, url3, url4, url5])
 
     const sessionUser = useSelector(state => state.session.user);
-    if (!sessionUser) return <Redirect to="/" />;
+    if (!sessionUser) history.push('/')
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setErrors({})
-        setImageErrors({})
+        setHasSubmitted(true);
+        
+        if (Object.keys(errors).length) {
+            return
+        }
+
         //submit button stuff
         const spot = {
             address,
             city,
             state,
             country,
-            lat,
-            lng,
             name,
             description,
-            price
-        }
-        
-        const newSpot = await dispatch(createNewSpot(spot)).catch(
-            async (res) => {
-                const data = await res.json();
-                if (data && data.message) {
-                    return setErrors(data.errors)
-                }
-            }
-        )
-
-        if (!newSpot) {
-            if (!previewImage) setImageErrors({urlrequired: "Preview image is required."})
-            return
+            price, 
+            lat: 0,
+            lng: 0
         }
 
+        const newSpot = await dispatch(createNewSpot(spot))
+
+        // put all spot image urls into an array
         let spotImages = [{ "url": previewImage, "preview": true }];
         const urls = [url2, url3, url4, url5];
         urls.forEach((url) => {
             if (url) spotImages.push({ "url": url, "preview": false })
         })
 
-        for (let spotImage of spotImages) {
-            dispatch(createSpotImage(spotImage, newSpot.id)).catch(
-                async (res) => {
-                    const data = await res.json();
-                    if (data && data.message) {
-                        return setImageErrors(data.errors)
-                    }
-                }
-            )
+        //for loops to create each spot image from spot id
+        if (newSpot) {
+            for (let spotImage of spotImages) {
+                dispatch(createSpotImage(spotImage, newSpot.id))
+            }
         }
- 
+        setErrors({})
+        setHasSubmitted(false);
+
+        history.push(`/spots/${newSpot.id}`)
+
     }
 
     return (
@@ -100,7 +112,7 @@ function CreateNewSpot() {
 
                             />
                         </label>
-                        {errors.country && <p className='errors'>{errors.country}</p>}
+                        {hasSubmitted && errors.country && <p className='errors'>{errors.country}</p>}
                         <label>
                             <p className='input-name'>Street Address</p>
                             <input className='create-new-spot-input'
@@ -111,7 +123,7 @@ function CreateNewSpot() {
 
                             />
                         </label>
-                        {errors.address && <p className='errors'>{errors.address}</p>}
+                        {hasSubmitted && errors.address && <p className='errors'>{errors.address}</p>}
 
                         <label>
                             <p className='input-name'>City</p>
@@ -123,7 +135,7 @@ function CreateNewSpot() {
 
                             />
                         </label>
-                        {errors.city && <p className='errors'>{errors.city}</p>}
+                        {hasSubmitted && errors.city && <p className='errors'>{errors.city}</p>}
 
                         <label>
                             <p className='input-name'>State</p>
@@ -135,32 +147,8 @@ function CreateNewSpot() {
 
                             />
                         </label>
-                        {errors.state && <p className='errors'>{errors.state}</p>}
+                        {hasSubmitted && errors.state && <p className='errors'>{errors.state}</p>}
 
-                        <label>
-                            <p className='input-name'>Latitude</p>
-
-                            <input className='create-new-spot-input'
-                                placeholder='Latitude'
-                                type="text"
-                                value={lat}
-                                onChange={(e) => setLatitude(e.target.value)}
-
-                            />
-                        </label>
-                        {errors.lat && <p className='errors'>{errors.lat}</p>}
-
-                        <label>
-                            <p className='input-name'>Longitude</p>
-                            <input className='create-new-spot-input'
-                                placeholder='Longitude'
-                                type="text"
-                                value={lng}
-                                onChange={(e) => setLongitude(e.target.value)}
-
-                            />
-                        </label>
-                        {errors.lng && <p className='errors'>{errors.lng}</p>}
 
                     </div>
                     <div className='form-block'>
@@ -172,7 +160,7 @@ function CreateNewSpot() {
                             onChange={(e) => setDescription(e.target.value)}
 
                         />
-                        {errors.description && <p className='errors'>{errors.description}</p>}
+                        {hasSubmitted && errors.description && <p className='errors'>{errors.description}</p>}
 
                     </div>
                     <div className='form-block'>
@@ -185,7 +173,7 @@ function CreateNewSpot() {
                             onChange={(e) => setName(e.target.value)}
 
                         />
-                        {errors.name && <p className='errors'>{errors.name}</p>}
+                        {hasSubmitted && errors.name && <p className='errors'>{errors.name}</p>}
 
                     </div>
                     <div className='form-block'>
@@ -200,7 +188,7 @@ function CreateNewSpot() {
 
                             />
                         </label>
-                        {errors.price && <p className='errors'>{errors.price}</p>}
+                        {hasSubmitted && errors.price && <p className='errors'>{errors.price}</p>}
 
                     </div>
 
@@ -215,9 +203,9 @@ function CreateNewSpot() {
                             onChange={(e) => setPreviewImage(e.target.value)}
 
                         />
-                        {imageErrors.urlrequired && <p className='errors'>{imageErrors.urlrequired}</p>}
+                        {hasSubmitted && errors.urlRequired && <p className='errors'>{errors.urlRequired}</p>}
 
-                        {imageErrors.url && <p className='errors'>{imageErrors.url}</p>}
+                        {hasSubmitted && errors.url && <p className='errors'>{errors.url}</p>}
 
                         <input className='url-input create-new-spot-input'
                             placeholder='Image URL'
@@ -225,28 +213,32 @@ function CreateNewSpot() {
                             value={url2}
                             onChange={(e) => setUrl2(e.target.value)}
                         />
+                        {hasSubmitted && errors.url2 && <p className='errors'>{errors.url2}</p>}
 
                         <input className='url-input create-new-spot-input'
                             placeholder='Image URL'
                             type="text"
                             value={url3}
                             onChange={(e) => setUrl3(e.target.value)}
-
                         />
+                        {hasSubmitted && errors.url3 && <p className='errors'>{errors.url3}</p>}
+
                         <input className='url-input create-new-spot-input'
                             placeholder='Image URL'
                             type="text"
                             value={url4}
                             onChange={(e) => setUrl4(e.target.value)}
-
                         />
+                        {hasSubmitted && errors.url4 && <p className='errors'>{errors.url4}</p>}
+
                         <input className='url-input create-new-spot-input'
                             placeholder='Image URL'
                             type="text"
                             value={url5}
                             onChange={(e) => setUrl5(e.target.value)}
-
                         />
+                        {hasSubmitted && errors.url5 && <p className='errors'>{errors.url5}</p>}
+
                     </div>
                     <div className='button-container'>
                         <button type='submit' className='create-spot-button'>Create Spot</button>

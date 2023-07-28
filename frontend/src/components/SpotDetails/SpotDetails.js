@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { spotDetails } from '../../store/spots'
@@ -11,7 +11,6 @@ import './SpotDetails.css'
 function SpotDetails() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
-    const [showReviewModal, setShowReviewModal] = useState(false);
     const sessionUser = useSelector(state => state.session.user);
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state => state.reviews[spotId])
@@ -28,8 +27,8 @@ function SpotDetails() {
     //spot image items
     let spotImages;
     if (spot?.SpotImages) {
-        spotImages = spot?.SpotImages?.map((image) => {
-            return <img key={`${image.id}`} className='house-images' src={image.url} alt={`house${image.id}`} />
+        spotImages = spot?.SpotImages?.map((image, index) => {
+            return <img key={`${image.id}`} id={`house-img-${index + 1}`} className={`house-images preview-${image.preview}`} src={image.url} alt={`house${image.id}`} />
         })
     }
 
@@ -49,11 +48,10 @@ function SpotDetails() {
                 </div>
             )
         })
+    } else {
+        reviewItems = <div>No reviews for this spot yet!</div>
     }
 
-    const openReviewModal = () => {
-        setShowReviewModal(!showReviewModal)
-    }
 
     //check if user has reviewed this spot
     let hasUserReviewed = false;
@@ -69,54 +67,56 @@ function SpotDetails() {
     return (
         <div className='outer-div'>
             <h1>{spot?.name}</h1>
-            <p>{spot?.city}, {spot?.state}, {spot?.country}</p>
-            <div className='img-container'>
+            <p id='location-container'>{spot?.city}, {spot?.state}, {spot?.country}</p>
+            <div id='spot-details-img-container'>
                 {spotImages}
             </div>
-            <div className='house-house-description'>
-                <p>Hosted by {spot?.Owner?.firstName} {spot?.Owner?.lastName}</p>
-                <p>{spot?.description}</p>
-            </div>
 
-            {/* Price and Reviews and Reserve Box */}
-            <div className='price-reviews-container'>
-                <div>
-                    <p><span>{spot?.price}</span> night</p>
-                    {spot?.numReviews ?
-                        <span><i className="fa-solid fa-star"></i> {spot?.avgStarRating} · {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
-                        :
-                        <span><i className="fa-solid fa-star"></i>New</span>
-                    }
+            <div id='home-details'>
+                <div className='house-description'>
+                    <h2 id='hosted-by'>Hosted by {spot?.Owner?.firstName} {spot?.Owner?.lastName}</h2>
+                    <p className='text-paragraphs'>{spot?.description}</p>
                 </div>
-                <button onClick={(e) => {
-                    alert("Feature Coming Soon...");
-                }}>Reserve</button>
-            </div>
 
+                {/* Price and Reviews and Reserve Box */}
+                <div id='price-reviews-container'>
+                    <div id='price-review-inline-block'>
+                        <p><span className='price-tag'>${spot?.price}</span> night</p>
+                        {spot?.numReviews ?
+                            <span className='rating-reviews'><i className="fa-solid fa-star"></i> {spot?.avgStarRating} · {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
+                            :
+                            <span className='rating-reviews'><i className="fa-solid fa-star"></i>New</span>
+                        }
+                    </div>
+                    <button id='reserve' onClick={(e) => {
+                        alert("Feature Coming Soon...");
+                    }}>Reserve</button>
+                </div>
+
+            </div>
             {/* Reviews Container */}
             <div className='review-container'>
                 <div>
                     <h2>
                         {spot?.numReviews ?
-                            <span><i className="fa-solid fa-star"></i> {spot?.avgStarRating} · {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
+                            <span><i className="fa-solid fa-star"></i> {spot?.avgStarRating} <span id='dot-span'>·</span> {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
                             :
                             <span><i className="fa-solid fa-star"></i>New</span>
                         }
                     </h2>
                     {sessionUser && (sessionUser?.id !== spot?.Owner?.id) && !hasUserReviewed &&
                         <>
-                            <button onClick={openReviewModal}>
-                                <OpenModalButton
-                                    className='modal-button'
-                                    buttonText='Post Your Review'
-                                    setShowMenu={setShowReviewModal}
-                                    modalComponent={<CreateNewReviewModal  />}
-                                    
-                                />
-                            </button>
+
+                            <OpenModalButton
+                                className='modal-button'
+                                buttonText='Post Your Review'
+                                modalComponent={<CreateNewReviewModal />}
+
+                            />
+
+                            {spot?.numReviews ? <p></p> : <p>Be the first to post a review!</p>}
                         </>
                     }
-                    {spot?.numReviews ? <p></p> : <p>Be the first to post a review!</p>}
 
                 </div>
                 {reviewItems}
