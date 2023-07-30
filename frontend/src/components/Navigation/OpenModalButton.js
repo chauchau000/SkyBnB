@@ -8,8 +8,6 @@ function OpenModalButton({ buttonText, modalComponent }) {
 
     const handleClick = () => {
         setModal(!modal);
-        //hi haru 
-        //setShowMenu(false)
     }
 
 

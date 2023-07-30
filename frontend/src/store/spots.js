@@ -71,31 +71,57 @@ export const createNewSpot = (spot) => async dispatch => {
     }
 }
 
+//Edit a spot 
+
+const UPDATE_SPOT = 'spots/updateSpot'
+const editSpot = (spot) => {
+    return {
+        type: UPDATE_SPOT,
+        payload: spot
+    }
+}
+
+export const updateSpot = (spot, spotId) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(spot)
+    })
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(editSpot(data));
+        return data
+    } else {
+        const errors = await res.json();
+        return errors
+    }
+}
 
 
 
 const initialState = {}
 
 const spotsReducer = (state = initialState, action) => {
-    let newState;
+    let newState = { ...state}
     switch (action.type) {
         case GET_ALL_SPOTS:
-            newState = {...state};
             action.payload.Spots.forEach( (spot ) => {
                 newState[spot.id] = spot
             })
             return newState
         case GET_SPOT_DETAILS:
-            newState = { ...state }
             const currentSpot = action.payload
             newState[currentSpot.id] = currentSpot
             return newState
         case CREATE_NEW_SPOT:
-            newState = { ...state }
             const newSpot = action.payload;
             newState[newSpot.id] = newSpot;
             return newState;
-
+        case UPDATE_SPOT:
+            const updatedSpot = action.payload;
+            newState[updatedSpot.id] = updatedSpot;
+            return newState
         default:
             return state
     }

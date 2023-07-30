@@ -27,7 +27,6 @@ function LoginFormModal() {
       }
     )
 
-    // dispatch(sessionActions.getUserSpots());
   }
 
   const demoUserLogin = (e) => {
@@ -39,7 +38,7 @@ function LoginFormModal() {
   return (
     <div className='login-container'>
       <h1>Log In</h1>
-      {errors.title && <p>{errors.title}</p>}
+      {errors.title && <p className='errors'>{errors.title}</p>}
       <form onSubmit={handleSubmit}>
         <label className='login-labels'>
           <span className='login-span'>Username or Email</span>

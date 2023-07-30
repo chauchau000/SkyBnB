@@ -48,26 +48,50 @@ export const createReview = (review, spotId) => async dispatch => {
     }
 }
 
+//delete review
+const DELETE_REVIEW = 'reviews/deleteReview'
+const removeReview = (reviewId) => {
+    return {
+        type: DELETE_REVIEW,
+        payload: reviewId
+    }
+}
+
+export const deleteReview = (reviewId) => async dispatch => {
+    const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE'
+    })
+
+    if (res.ok) {
+        const data = await res.json()
+        dispatch(removeReview(reviewId))
+        return data
+    } else {
+        const errors = await res.json();
+        return errors
+    }
+}
+
 
 const initialState = {}
 
 const reviewsReducer = (state = initialState, action) => {
-    let newState;
+    let newState = { ...state };
     switch (action.type) {
         case GET_REVIEWS:
-            newState = { ...state };
             const reviews = action.payload.Reviews; 
             if (reviews.length) {
                 newState[reviews[0].spotId] = [...reviews];
             }
             return newState
         case CREATE_REVIEW:
-            newState = { ...state };
             const newReview = action.payload;
             if (newState[newReview.spotId]) newState[newReview.spotId].push(newReview)
             else newState[newReview.spotId] = [newReview];
             return newState
-
+        case DELETE_REVIEW:
+            delete newState[action.payload.reviewId]
+            return newState
         default:
             return state
     }

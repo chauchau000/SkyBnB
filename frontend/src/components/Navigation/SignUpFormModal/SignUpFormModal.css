@@ -7,7 +7,7 @@
     padding: 25px;
     z-index: 1000;
     box-sizing: border-box;
-    border: solid 2px rgb(202, 140, 150);
+    border: solid 2px black;
     border-radius: 50px;
     box-shadow: 5px 5px 5px rgb(168, 161, 161);
     width: 500px;
@@ -38,8 +38,9 @@ h1, form {
     width: 150px;
     padding: 8px;
     font-size: 20px;
-    background-color: rgb(103, 103, 240);
+    background-color: red;
     color: white;
+    border-radius: 5px
 }
 
 .signup-span {
@@ -48,8 +49,8 @@ h1, form {
 }
 
 .signup-input {
-    background-color: rgba(238, 176, 224, 0.872);
-    border: solid 1px grey;
+    background-color: rgba(132, 193, 210, 0.872);
+    border: solid 2px black;
     border-radius: 10px;
     font-size: 15px;
     padding: 8px;
@@ -60,4 +61,8 @@ h1, form {
     color: red;
     font-size: 14px;
     padding-left: 10px; 
+}
+
+button:disabled {
+    background-color: rgba(128, 128, 128, 0.3);
 }

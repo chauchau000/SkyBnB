@@ -67,7 +67,7 @@ router.delete('/', (_req, res) => {
 
 //GET CURRENT USER
 router.get('/', (req, res) => {
-    const { user } = req;
+    const { user, spots } = req;
     if (user) {
       const safeUser = {
         id: user.id,
@@ -75,9 +75,11 @@ router.get('/', (req, res) => {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
-      };
+      }
+      
       return res.json({
-        user: safeUser
+        user: safeUser,
+        spots
       });
     } else return res.json({ user: null });
   }

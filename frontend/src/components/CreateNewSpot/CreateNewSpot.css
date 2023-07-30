@@ -23,15 +23,14 @@ h2 {
 .form-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    width: 350px;
+    margin: auto;
 
 }
 
 .flex-item {
     width: 350px;
 }
-
 
 
 .create-new-spot-p {
@@ -43,6 +42,11 @@ h2 {
 .create-spot-form {
     padding: 0;
     margin: 0;
+}
+
+.create-spot-form input {
+    height: 30px;
+    margin: 2px 0 5px 0;
 }
 
 .address-block {
@@ -63,7 +67,7 @@ h2 {
     border: solid 2px black;
     background-color: rgb(200, 234, 245);
     padding: 1px;
-    width: 350px
+    width: 100%
 }
 .create-new-spot-input::placeholder{
     font-size:11px;
@@ -98,4 +102,35 @@ h2 {
     padding: 0;
     font-size: 12px;
     padding-bottom: 4px;
+    text-align: center;
+}
+
+#city-state {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        'city city state'
+}
+
+#city-input {
+    grid-area: 'city';
+
+}
+
+#city-block {
+    padding-right: 3px;
+}
+
+#state-input {
+    grid-area: 'state'}
+
+
+#separator {
+    font-size: 20pt;
+}
+
+#city-label {
+    display: inline-flex;
+    width: 100%
 }

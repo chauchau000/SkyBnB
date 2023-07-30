@@ -1,24 +1,41 @@
+// import { useEffect } from 'react'
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import SpotItems from '../SpotItems/SpotItems'
+import { getUserSpots } from '../../../store/session'
 import './ManageSpots.css'
 
 
 function ManageSpots() {
   const dispatch = useDispatch();
-  const userSpots = Object.values(useSelector((state) => state.session.spots))
 
+  
+  const userSpotsObj = (useSelector((state) => state.session.spots))
+  const userSpots = Object.values(userSpotsObj)
+  useEffect(() => {
+    dispatch(getUserSpots())
+  }, [dispatch])
+ 
   return (
-    <>
-      <h1>Manage Your Spots</h1>
+    <div id='manage-spots-container'>
+      <h1>Manage Spots</h1>
       <Link to='/spots/new'>
-        <p>Create a New Spot</p>
+        <button className='ManageSpots-button'>Create a New Spot</button>
       </Link>
+
+    {userSpots ? 
+
       <div className='flex-container'>
         <SpotItems spots={userSpots} page='ManageSpots' />
       </div>
-    </>
+    
+      : 
+      
+      <div>
+        You do not have any spots to manage. Create a new spot with AirBnb now!
+      </div>}
+    </div>
   )
 }
 

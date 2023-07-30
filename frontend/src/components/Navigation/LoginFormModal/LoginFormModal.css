@@ -8,7 +8,7 @@
     padding: 25px;
     z-index: 1000;
     box-sizing: border-box;
-    border: solid 2px rgb(202, 140, 150);
+    border: solid 2px black;
     border-radius: 50px;
     box-shadow: 5px 5px 5px rgb(168, 161, 161);
 }
@@ -51,8 +51,8 @@ h1, form {
 }
 
 .login-inputs {
-    background-color: rgba(238, 176, 224, 0.872);
-    border: solid 1px grey;
+    background-color: rgba(132, 193, 210, 0.872);
+    border: solid 2px black;
     border-radius: 10px;
     font-size: 15px;
     padding: 8px;

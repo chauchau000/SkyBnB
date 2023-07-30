@@ -2,13 +2,14 @@ import React, { useState, useEffect, useContext } from 'react'
 import ReviewStars from './ReviewStars/ReviewStars';
 import { useDispatch } from 'react-redux';
 import { createReview } from '../../store/reviews';
-import { useParams, useHistory } from 'react-router-dom';
+import { spotDetails } from '../../store/spots';
+import { getReviews } from '../../store/reviews';
+import { useParams } from 'react-router-dom';
 import { context } from '../Navigation/OpenModalButton';
 import './CreateNewReviewModal.css'
 
 function CreateNewReviewModal() {
     const dispatch = useDispatch()
-    const history = useHistory()
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(0);
     const [errors, setErrors] = useState({});
@@ -37,7 +38,11 @@ function CreateNewReviewModal() {
                     }
                 }
         );
-        if (createdReview) setModal(false)
+        if (createdReview) {
+            dispatch(spotDetails(spotId))
+            dispatch(getReviews(spotId))
+            setModal(false)
+        }
     }
 
     return (

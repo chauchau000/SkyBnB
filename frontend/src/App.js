@@ -9,6 +9,7 @@ import Spots from "./components/Spots/Spots";
 import SpotDetails from "./components/SpotDetails/SpotDetails";
 import CreateNewSpot from "./components/CreateNewSpot/CreateNewSpot";
 import ManageSpots from "./components/Spots/ManageSpots/ManageSpots";
+import UpdateSpot from "./components/UpdateSpot/UpdateSpot";
 
 
 function App() {
@@ -35,8 +36,11 @@ function App() {
           <Route path='/spots/:spotId'>
             <SpotDetails />
           </Route>
+          <Route path='/user/spots/:spotId/edit'>
+            <UpdateSpot />
+          </Route>
           <Route path='/user/spots'>
-            <ManageSpots isLoaded={isLoaded}/>
+            <ManageSpots />
           </Route>
           <Route exact path="/">
             <Spots />

@@ -36,7 +36,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     history.push('/')
-    
+
   };
 
   const ulClassName = (showMenu ? "profile-dropdown" : " hidden");
@@ -50,29 +50,28 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hello, {user.username}</li>
-            <li>{user.email}</li>
+            <li className='logged-in'>Hello, {user.username}</li>
+            <li className='logged-in'>{user.email}</li>
             <Link to='/user/spots'>
-            <li id="manage-spots-button-container">
-              <button id='manage-spots-button'>Manage Spots</button>
-            </li>
+              <li className='logged-in' id="manage-spots-button-container">
+                <button id='manage-spots-button'>Manage Spots</button>
+              </li>
             </Link>
-            <li>
+            <li className='logged-in' id='log-out-button-container'>
               <button id='logout-button' onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
-            <li className='button-container li-1-container'>
+            <li id='li-1-container' className='button-container'>
               <OpenModalButton
                 className='modal-button'
                 buttonText="Log In"
                 setShowMenu={setShowMenu}
                 modalComponent={<LoginFormModal />}
-
               />
             </li>
-            <li className='button-container li-2-container'>
+            <li id='li-2-container' className='button-container'>
               <OpenModalButton
                 className='modal-button'
                 buttonText="Sign Up"

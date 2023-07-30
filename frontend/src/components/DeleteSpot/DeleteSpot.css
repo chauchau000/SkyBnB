@@ -1,0 +1,41 @@
+#delete-modal-container {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    width: 400px;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    padding: 25px;
+    z-index: 1000;
+    box-sizing: border-box;
+    border: solid 2px black;
+    border-radius: 50px;
+    box-shadow: 5px 5px 5px rgb(168, 161, 161);
+}
+
+.review-modal-container > h1 {
+    text-align: center;
+    padding-bottom: 12px;
+}
+
+.review-model textarea {
+    width: 200px;
+}
+
+#confirm-delete-button, #deny-delete-button {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    border: 2px solid black;
+    margin: 10px 0;
+    color: white;
+    border-radius: 4px;
+}
+
+#confirm-delete-button {
+    background-color: red;
+}
+
+#deny-delete-button {
+    background-color: grey;
+}

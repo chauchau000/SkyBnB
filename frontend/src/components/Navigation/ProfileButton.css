@@ -22,50 +22,63 @@
     cursor: pointer
 
 }
-
-.profile-button:hover {
-    box-shadow: 1px 1px 2px rgb(158, 155, 155);
+.logged-in {
+    padding: 10px;
 }
+/* .profile-button:hover {
+    box-shadow: 1px 1px 2px rgb(158, 155, 155);
+} */
 
 .profile-dropdown {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     font-size: 12px;
-    position: fixed;
+    position: absolute;
     background-color: white;
-    top: 55px;
-    right: 10px;
+    top: 45px;
+    right: 0px;
     border-radius: 20px;
     border: 1.5px solid lightgray;
     box-shadow: 1px 2px 2px rgb(158, 155, 155);
     width: 175px;
+    padding: 0;
 }
 
-
+#log-out-button-container {
+    border-top: 1px solid rgb(149, 137, 137)
+}
 
 .modal-button {
     padding: 3px;
     background-color: rgba(255, 255, 255, 0);
-
-
 }
 
 .button-container, .modal-button {
     cursor: pointer
 }
 
-.button-container:hover {
+/* .button-container:hover {
+    background-color: rgba(221, 221, 221, 0.424);
+
+} */
+
+
+#li-1-container {
+    border-radius: 20px 20px 0 0;
+    padding: 10px;
+    border: none;
+}
+#li-1-container:hover, #li-2-container:hover {
     background-color: rgba(221, 221, 221, 0.424);
 
 }
-
-.li-1-container {
-    border-radius: 20px 20px 0 0;
+.button-container {
+    border: none;
 }
-
-.li-2-container {
-        border-radius: 0 0 20px 20px;
+#li-2-container {
+    border-radius: 0 0 20px 20px;
+    padding: 10px;
 
 }
 #manage-spots-button {
@@ -76,7 +89,6 @@
 
 #manage-spots-button-container {
     border-top: 1px solid rgb(149, 137, 137);
-    border-bottom: 1px solid rgb(149, 137, 137)
 }
 
 #manage-spots-button-container:hover {

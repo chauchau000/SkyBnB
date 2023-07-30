@@ -6,6 +6,7 @@ import { getReviews } from '../../store/reviews'
 import { getMonthName } from '../../utils/dates';
 import CreateNewReviewModal from '../CreateNewReviewModal/CreateNewReviewModal';
 import OpenModalButton from '../Navigation/OpenModalButton';
+import DeleteReviewModal from '../DeleteReviewModal/DeleteReviewModal';
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -44,12 +45,17 @@ function SpotDetails() {
                     <p className='review-user-firstName'>{review.User?.firstName}</p>
                     <p className='review-date'>{getMonthName(monthNum)} {year}</p>
                     <p className='review-description'>{review?.review}</p>
-                    {sessionUser?.id === review?.User?.id && <button>Delete</button>}
+                    {sessionUser?.id === review?.User?.id && (                            
+                            <OpenModalButton
+                                className='spotdetails-modal-button'
+                                buttonText='Delete'
+                                modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId}/>}
+                            />)}
                 </div>
             )
         })
     } else {
-        reviewItems = <div>No reviews for this spot yet!</div>
+        reviewItems = <div><p>Be the first to post a review!</p></div>
     }
 
 
@@ -105,17 +111,14 @@ function SpotDetails() {
                         }
                     </h2>
                     {sessionUser && (sessionUser?.id !== spot?.Owner?.id) && !hasUserReviewed &&
-                        <>
-
+                        <div id='post-review-button'>
                             <OpenModalButton
-                                className='modal-button'
+                                className='spotdetails-modal-button'
                                 buttonText='Post Your Review'
                                 modalComponent={<CreateNewReviewModal />}
-
                             />
 
-                            {spot?.numReviews ? <p></p> : <p>Be the first to post a review!</p>}
-                        </>
+                        </div>
                     }
 
                 </div>

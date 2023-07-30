@@ -138,6 +138,22 @@ button#reserve {
     padding: 5px 0;
 }
 
+#post-review-button {
+    border: 2px solid black;
+    width: 160px;
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 1px 1px black;
+}
+
+#post-review-button .modal-button {
+    color: white
+}
+
+
+
+
+
 #dot-span {
     padding: 0 6px;
 }
@@ -155,5 +171,13 @@ button#reserve {
 .review-description {
     padding: 10px 0;
     font-size: 10pt;
+}
+
+.spotdetails-modal-button {
+    border: 2px solid black;
+    width: 160px;
+    background-color: red;
+    border-radius: 5px;
+    box-shadow: 1px 1px black;
 }
 
