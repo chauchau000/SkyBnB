@@ -19,7 +19,7 @@ function Spots() {
 
 
     return (
-        <div className='flex-container'>
+        <div className='grid-container'>
             <SpotItems spots={allSpots} page='AllSpots'/>
         </div>
     )

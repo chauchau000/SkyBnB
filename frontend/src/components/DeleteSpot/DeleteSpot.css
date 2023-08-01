@@ -1,26 +1,38 @@
-#delete-modal-container {
+#delete-spot-modal-container {
     position: fixed;
     top: 30%;
     left: 50%;
     width: 400px;
     transform: translate(-50%,-50%);
     background-color: white;
-    padding: 25px;
+    padding: 20px;
     z-index: 1000;
     box-sizing: border-box;
-    border: solid 2px black;
-    border-radius: 50px;
+    border: solid 3px black;
+    border-radius: 10px;
     box-shadow: 5px 5px 5px rgb(168, 161, 161);
+
 }
 
-.review-modal-container > h1 {
+#delete-spot-modal-container > h1 {
+    color: black;
     text-align: center;
-    padding-bottom: 12px;
+    padding: 0;
+    margin: 0 0 10px 0;
+
 }
 
-.review-model textarea {
-    width: 200px;
+#delete-spot-modal-container p {
+    color: black;
+    text-align: center;
+    font-size: 14px;
+    padding: 0;
+    margin: 10px 0 15px 0;
+    
 }
+
+
+
 
 #confirm-delete-button, #deny-delete-button {
     display: block;
@@ -39,3 +51,4 @@
 #deny-delete-button {
     background-color: grey;
 }
+

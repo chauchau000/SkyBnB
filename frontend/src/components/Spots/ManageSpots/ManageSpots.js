@@ -26,7 +26,7 @@ function ManageSpots() {
 
     {userSpots ? 
 
-      <div className='flex-container'>
+      <div id='manage-spots-grid-container'>
         <SpotItems spots={userSpots} page='ManageSpots' />
       </div>
     

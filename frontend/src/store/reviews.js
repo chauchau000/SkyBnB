@@ -81,6 +81,7 @@ const reviewsReducer = (state = initialState, action) => {
         case GET_REVIEWS:
             const reviews = action.payload.Reviews; 
             if (reviews.length) {
+                newState[reviews[0].spotId] = [];
                 newState[reviews[0].spotId] = [...reviews];
             }
             return newState

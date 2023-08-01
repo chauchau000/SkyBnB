@@ -1,5 +1,5 @@
 #manage-spots-container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 10px 50px;
 }
 
@@ -23,3 +23,14 @@
 .delete-modal-button {
     color: white
 }
+
+#manage-spots-grid-container{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(auto-fit, 300px);
+    align-items: center;
+    justify-items: center;
+    grid-gap: 30px;
+    max-width: 1300px;
+    margin: 10px auto;
+} 

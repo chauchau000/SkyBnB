@@ -5,7 +5,7 @@
 }
 
 
-.flex-container {
+.grid-container {
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: repeat(auto-fit, 300px);
@@ -15,4 +15,7 @@
     grid-gap: 30px;
     max-width: 1300px;
     margin: 10px auto;
-}
+} 
+
+
+

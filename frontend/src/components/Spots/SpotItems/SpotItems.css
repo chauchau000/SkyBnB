@@ -1,11 +1,12 @@
-
-.flex-item {
+.grid-item {
     max-width: 100%;
     height: auto;
 }
 
 
-.flex-item .spot-tile-img {
+
+
+.grid-item .spot-tile-img {
     border-radius: 20px;
 }
 
@@ -31,6 +32,10 @@
     height: 300px;
 }
 
+.fa-solid {
+    margin: 0 3px;
+}
+
 #spot-price {
     font-size: 17px;
     font-weight: 500
@@ -50,6 +55,11 @@
     font-size: 14px;
 
 }
+
+
+
+
+
 
 
 
@@ -77,4 +87,7 @@
 
 .flex-item img:hover .tooltip {
     opacity: 1
+}
+#Delete-buttonText {
+    color: white;
 }

@@ -181,3 +181,10 @@ button#reserve {
     box-shadow: 1px 1px black;
 }
 
+.review-item-container .button-container {
+    border: 2px solid black;
+    width: 80px;
+    background-color: red;
+    border-radius: 3px;
+    box-shadow: 2px 2px black;
+}

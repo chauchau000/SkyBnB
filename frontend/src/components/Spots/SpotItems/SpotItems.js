@@ -16,7 +16,7 @@ function SpotItems({ spots, page }) {
     }
 
     return (
-      <div key={spot?.id} className='flex-item'>
+      <div key={spot?.id} className='grid-item'>
 
         {/* SPOT TILE */}
         <Link to={`/spots/${spot?.id}`}>
@@ -31,7 +31,7 @@ function SpotItems({ spots, page }) {
           <span className='state-stars city-state'>{spot?.city}, {spot?.state} </span>
           <span className='state-stars'><i className="fa-solid fa-star"></i>
             {
-              spot?.avgRating ? <span>{spot?.avgRating}</span> : <span>New</span>
+              spot?.avgRating ? <span className='avg-rating'>{spot?.avgRating}</span> : <span>New</span>
             }
 
           </span>
@@ -49,7 +49,6 @@ function SpotItems({ spots, page }) {
 
             <button className={`${page}-button`}>
               <OpenModalButton
-                className='delete-modal-button'
                 buttonText="Delete"
                 modalComponent={<DeleteSpot spotId={spot.id} />}
               />

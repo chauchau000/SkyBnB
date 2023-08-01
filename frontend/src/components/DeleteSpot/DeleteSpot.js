@@ -25,10 +25,9 @@ function DeleteSpot({ spotId }) {
     }
 
     return (
-        <div className='delete-modal-container'>
+        <div id='delete-spot-modal-container'>
             <h1>Confirm Delete</h1>
             <div>
-
                 <p>Are you sure you want to remove this spot from the listings?</p>
                 {errors && <p>{errors.message}</p>}
                 <button id='confirm-delete-button' onClick={handleClick}>Yes &#40;Delete Spot&#41;</button>

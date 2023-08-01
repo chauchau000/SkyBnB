@@ -95,7 +95,7 @@ function CreateNewSpot() {
     }
 
     return (
-        <div className='form-container'>
+        <div className='create-spot-form-container'>
             <h1>Create a new Spot</h1>
             <h2>Where's your place located?</h2>
             <p className='create-new-spot-p'>Guests will only get your exact address once they booked a reservation</p>
@@ -184,8 +184,8 @@ function CreateNewSpot() {
                 <div className='form-block'>
                     <h2>Set a base price for your spot</h2>
                     <p className='create-new-spot-p'>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-                    <label>
-                        <span>$</span>  <input className='create-new-spot-input'
+                    <label id='create-new-spot-price'>
+                        <span id='dollar-sign'>$ </span>  <input className='create-new-spot-input'
                             placeholder='Price per night (USD)'
                             type="text"
                             value={price}

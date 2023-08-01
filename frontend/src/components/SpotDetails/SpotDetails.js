@@ -47,7 +47,6 @@ function SpotDetails() {
                     <p className='review-description'>{review?.review}</p>
                     {sessionUser?.id === review?.User?.id && (                            
                             <OpenModalButton
-                                className='spotdetails-modal-button'
                                 buttonText='Delete'
                                 modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId}/>}
                             />)}
@@ -55,7 +54,7 @@ function SpotDetails() {
             )
         })
     } else {
-        reviewItems = <div><p>Be the first to post a review!</p></div>
+        reviewItems = <div className='review-item-container'><p>Be the first to post a review!</p></div>
     }
 
 
