@@ -54,7 +54,10 @@ function SpotDetails() {
             )
         })
     } else {
-        reviewItems = <div className='review-item-container'><p>Be the first to post a review!</p></div>
+        if (sessionUser && (sessionUser?.id !== spot?.Owner?.id)){
+
+            reviewItems = <div className='review-item-container'><p>Be the first to post a review!</p></div>
+        }
     }
 
 

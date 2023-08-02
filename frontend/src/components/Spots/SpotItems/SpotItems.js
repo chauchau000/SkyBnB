@@ -24,22 +24,22 @@ function SpotItems({ spots, page }) {
             <img className='spot-tile-img' src={spot?.previewImage} alt={spot?.name} />
             <div className='tooltip' id={`spot-id-${spot?.id}`}>{spot?.name}</div>
           </div>
+
+          {/* CITY, STATE, STARS, AVG RATING */}
+          <p className='state-stars-container'>
+            <span className='state-stars city-state'>{spot?.city}, {spot?.state} </span>
+            <span className='state-stars'><i className="fa-solid fa-star"></i>
+              {
+                spot?.avgRating !== '0.00' ? <span className='avg-rating'>{spot?.avgRating}</span> : <span>New</span>
+              }
+
+            </span>
+          </p>
+
+          {/* PRICE */}
+          <p className='price-container'><span id='spot-price'> ${spot?.price} </span> night</p>
+
         </Link>
-
-        {/* CITY, STATE, STARS, AVG RATING */}
-        <p className='state-stars-container'>
-          <span className='state-stars city-state'>{spot?.city}, {spot?.state} </span>
-          <span className='state-stars'><i className="fa-solid fa-star"></i>
-            {
-              spot?.avgRating ? <span className='avg-rating'>{spot?.avgRating}</span> : <span>New</span>
-            }
-
-          </span>
-        </p>
-
-        {/* PRICE */}
-        <p className='price-container'><span id='spot-price'> ${spot?.price} </span> night</p>
-
 
         {page === 'ManageSpots' ?
           (<div className='update-delete-container'>

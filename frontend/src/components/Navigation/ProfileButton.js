@@ -35,6 +35,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    setShowMenu(false)
     history.push('/')
 
   };
@@ -67,7 +68,6 @@ function ProfileButton({ user }) {
               <OpenModalButton
                 className='modal-button'
                 buttonText="Log In"
-                setShowMenu={setShowMenu}
                 modalComponent={<LoginFormModal />}
               />
             </li>
@@ -75,7 +75,6 @@ function ProfileButton({ user }) {
               <OpenModalButton
                 className='modal-button'
                 buttonText="Sign Up"
-                setShowMenu={setShowMenu}
                 modalComponent={<SignUpFormModal />}
               />
             </li>

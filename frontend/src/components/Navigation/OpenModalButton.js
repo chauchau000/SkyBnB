@@ -3,6 +3,9 @@ import './OpenModalButton.css'
 
 export const context = createContext(null)
 
+
+
+
 function OpenModalButton({ buttonText, modalComponent }) {
     const [modal, setModal] = useState(false);
 
@@ -14,7 +17,6 @@ function OpenModalButton({ buttonText, modalComponent }) {
 
     return (
         <context.Provider value={{ setModal }}>
-
             <div className='button-container' onClick={() => { if (modal === false) setModal(true) }}>
                 <button id={`${buttonText}-buttonText`} className='modal-button' onClick={handleClick}>
                     {buttonText}

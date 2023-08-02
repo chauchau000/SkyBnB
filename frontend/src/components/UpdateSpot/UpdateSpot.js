@@ -58,7 +58,7 @@ function UpdateSpot() {
             lng: 0
         }
 
-        const newSpot = await dispatch(updateSpot(spot, spotId))
+        await dispatch(updateSpot(spot, spotId))
 
         
         setErrors({})

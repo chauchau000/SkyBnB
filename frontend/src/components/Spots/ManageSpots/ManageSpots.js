@@ -20,9 +20,6 @@ function ManageSpots() {
   return (
     <div id='manage-spots-container'>
       <h1>Manage Spots</h1>
-      <Link to='/spots/new'>
-        <button className='ManageSpots-button'>Create a New Spot</button>
-      </Link>
 
     {userSpots ? 
 
@@ -34,6 +31,9 @@ function ManageSpots() {
       
       <div>
         You do not have any spots to manage. Create a new spot with AirBnb now!
+      <Link to='/spots/new'>
+        <button className='ManageSpots-button'>Create a New Spot</button>
+      </Link>
       </div>}
     </div>
   )

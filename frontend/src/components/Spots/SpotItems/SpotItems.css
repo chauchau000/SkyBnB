@@ -44,11 +44,14 @@
 .price-container {
     font-size: 14px;
     padding: 4px;
+    color: black;
+
 }
 .state-stars-container {
     display: flex;
     justify-content: space-between;
     padding: 2px;
+    color: black;
 }
 
 .state-stars {
@@ -67,6 +70,7 @@
 .img-container:hover, .flex-item img:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+
 
 
 

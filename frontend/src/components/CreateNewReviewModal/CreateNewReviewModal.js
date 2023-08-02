@@ -48,17 +48,17 @@ function CreateNewReviewModal() {
     return (
         <div className='review-modal-container'>
             <h1>How was your stay?</h1>
-            {errors.message && <p className='errors'>{errors.message}</p>}
             <form id='review-block' onSubmit={onSubmit}>
                     <textarea
                         rows="5" cols="40"
-                        placeholder='Leave your review here'
+                        placeholder='Leave your review here...'
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
-                    />
+                        />
                 <div className='stars-container'>
                     <ReviewStars stars={stars} setStars={setStars} />
                 </div>
+                {errors.message && <p className='errors'>{errors.message}</p>}
                 <button id='submit-review-button' type='submit' disabled={Object.values(errors).length}>Submit Your Review</button>
             </form>
 

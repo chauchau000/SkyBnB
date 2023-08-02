@@ -1,5 +1,7 @@
 import { useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
+import { spotDetails } from '../../store/spots'
+
 import { deleteReview, getReviews } from '../../store/reviews';
 import { context } from '../Navigation/OpenModalButton';
 import './DeleteReviewModal.css'
@@ -19,6 +21,7 @@ function DeleteReviewModal({ reviewId, spotId }) {
                 };
             })
 
+        await dispatch(spotDetails(spotId))
         await dispatch(getReviews(spotId))
 
         setModal(false)

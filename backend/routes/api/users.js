@@ -88,7 +88,7 @@ router.get('/spots', requireAuth, async (req, res, next) => {
       },
       group: ['Spot.id']
     });
-    const avgRating = spotAvgRating.dataValues.avgRating
+    const avgRating = Number(spotAvgRating.dataValues.avgRating).toFixed(2);
 
     if (spotAvgRating) spot.dataValues.avgRating = avgRating;
   };

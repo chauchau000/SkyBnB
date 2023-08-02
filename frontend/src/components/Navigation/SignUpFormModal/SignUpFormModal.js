@@ -22,11 +22,11 @@ function SignUpFormModal() {
     const errors = {};
     
     if (!email.length) errors.email = 'Email is required';
-    if (!username.length) errors.address = 'Username is required';
+    if (username.length < 4) errors.address = 'Username is required';
     if (!firstName.length) errors.firstName = 'First name is required';
     if (!lastName.length) errors.lastName = 'Last name is required';
-    if (!password.length) errors.password = 'Password is required';
-    if (!confirmPassword.length) errors.confirmPassword = 'Password is required';
+    if (password.length < 6) errors.password = 'Password is required';
+    if (confirmPassword.length < 6) errors.confirmPassword = 'Password is required';
     if (password !== confirmPassword) errors.matchingPassword = 'Passwords must be matching';
     
     setValidationErrors(errors)
