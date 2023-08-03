@@ -160,8 +160,8 @@ function UpdateSpot() {
                 <div className='form-block'>
                     <h2>Set a base price for your spot</h2>
                     <p className='create-new-spot-p'>Competitive pricing can help your listing stand out and rank higher in search results.</p>
-                    <label>
-                        <span>$</span>  <input className='create-new-spot-input'
+                    <label id='update-new-spot-price'>
+                    <span id='dollar-sign'>$ </span>  <input className='create-new-spot-input'
                             placeholder='Price per night (USD)'
                             type="text"
                             value={price}

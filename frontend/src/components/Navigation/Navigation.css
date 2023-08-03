@@ -5,8 +5,11 @@
 
 }
 
-.nav-bar {
-    height: 100px;
+
+#nav-bar {
+    height: 75px;
+    position: relative;
+    padding: 10px 60px;
 }
 
 #airbnb-icon {
@@ -23,6 +26,7 @@
     align-items: center;
 
 }
+
 
 .hidden {
     display: none

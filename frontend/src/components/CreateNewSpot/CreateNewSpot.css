@@ -30,9 +30,16 @@ h2 {
 
 .create-spot-form-container input {
     border-radius: 3px;
+    padding: 5px;
+    outline: none
 }
 .create-spot-form-container textarea {
     border-radius: 3px;
+    padding: 5px;
+    outline: none;
+    resize: none
+
+
 }
 
 .flex-item {

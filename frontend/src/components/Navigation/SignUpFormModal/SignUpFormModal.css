@@ -7,9 +7,10 @@
     padding: 25px;
     z-index: 1000;
     box-sizing: border-box;
-    border: solid 2px black;
-    border-radius: 50px;
-    box-shadow: 5px 5px 5px rgb(168, 161, 161);
+
+    border-radius: 20px;
+    border: solid px rgba(104, 97, 97, 0.598);
+    box-shadow: 0 0 8px 5px rgba(0, 0, 0, 0.5);    
     width: 500px;
 }
 
@@ -50,11 +51,12 @@ h1, form {
 
 .signup-input {
     background-color: rgba(132, 193, 210, 0.872);
-    border: solid 2px black;
+    border: solid 2px rgba(73, 69, 69, 0.661);
     border-radius: 10px;
     font-size: 15px;
     padding: 8px;
     size: 150px;
+    outline: none;
 }
 
 .errors {

@@ -19,51 +19,56 @@ function SpotItems({ spots, page }) {
       <div key={spot?.id} className='grid-item'>
 
         {/* SPOT TILE */}
-        <Link to={`/spots/${spot?.id}`}>
-          <div className='img-container' onMouseMove={(handleMouseMove)}>
-            <img className='spot-tile-img' src={spot?.previewImage} alt={spot?.name} />
-            <div className='tooltip' id={`spot-id-${spot?.id}`}>{spot?.name}</div>
-          </div>
 
-          {/* CITY, STATE, STARS, AVG RATING */}
-          <p className='state-stars-container'>
-            <span className='state-stars city-state'>{spot?.city}, {spot?.state} </span>
-            <span className='state-stars'><i className="fa-solid fa-star"></i>
-              {
-                spot?.avgRating !== '0.00' ? <span className='avg-rating'>{spot?.avgRating}</span> : <span>New</span>
-              }
+          <Link to={`/spots/${spot?.id}`}>
+        <div className='spot-tile'>
+            <div className='img-container' onMouseMove={(handleMouseMove)}>
+              <img className='spot-tile-img' src={spot?.previewImage} alt={spot?.name} />
+              <div className='tooltip' id={`spot-id-${spot?.id}`}>{spot?.name}</div>
+            </div>
 
-            </span>
-          </p>
+            {/* CITY, STATE, STARS, AVG RATING */}
+            <p className='state-stars-container'>
+              <span className='state-stars city-state'>{spot?.city}, {spot?.state} </span>
+              <span className='state-stars'><i className="fa-solid fa-star"></i>
+                {
+                  spot?.avgRating !== '0.00' ? <span className='avg-rating'>{spot?.avgRating}</span> : <span>New</span>
+                }
 
-          {/* PRICE */}
-          <p className='price-container'><span id='spot-price'> ${spot?.price} </span> night</p>
+              </span>
+            </p>
 
+            {/* PRICE */}
+            <p className='price-container'><span id='spot-price'> ${spot?.price} </span> night</p>
+        </div>
+      </Link>
+
+
+        {
+      page === 'ManageSpots' ?
+      (<div className='update-delete-container'>
+        <Link to={`/user/spots/${spot.id}/edit`}>
+          <button className={`${page}-button`}>Update</button>
         </Link>
 
-        {page === 'ManageSpots' ?
-          (<div className='update-delete-container'>
-            <Link to={`/user/spots/${spot.id}/edit`}>
-              <button className={`${page}-button`}>Update</button>
-            </Link>
+        <button className={`${page}-button`}>
+          <OpenModalButton
+            buttonText="Delete"
+            modalComponent={<DeleteSpot spotId={spot.id} />}
+          />
+        </button>
+      </div>) : <></>
+    }
 
-            <button className={`${page}-button`}>
-              <OpenModalButton
-                buttonText="Delete"
-                modalComponent={<DeleteSpot spotId={spot.id} />}
-              />
-            </button>
-          </div>) : <></>}
-
-      </div>
+      </div >
     )
-  })
+})
 
-  return (
-    <>
-      {spotItems}
-    </>
-  )
+return (
+  <>
+    {spotItems}
+  </>
+)
 }
 
 export default SpotItems

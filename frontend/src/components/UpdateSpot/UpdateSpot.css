@@ -28,11 +28,16 @@ h2 {
 
 }
 
-.create-spot-form-container input {
+.update-spot-form-container input {
     border-radius: 3px;
+    outline: none;
+    padding: 5px;
 }
-.create-spot-form-container textarea {
+.update-spot-form-container textarea {
     border-radius: 3px;
+    padding: 5px;
+    outline: none;
+    resize: none
 }
 
 .flex-item {
@@ -156,4 +161,13 @@ h2 {
 #city-label {
     display: inline-flex;
     width: 100%
+}
+
+#dollar-sign {
+    padding: 0 5px 0 0;
+}
+
+#update-new-spot-price {
+    display: flex;
+    align-items: center;
 }

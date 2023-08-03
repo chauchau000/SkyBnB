@@ -1,7 +1,14 @@
 .grid-item {
     max-width: 100%;
     height: auto;
+    border-radius: 10px;
 }
+
+/* .grid-item:hover {
+    box-shadow: 0 0 5px rgba(125, 122, 122, 0.5);
+
+}
+ */
 
 
 
@@ -15,8 +22,8 @@
 }
 
 .img-container {
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
     background-color: lightgrey;
     border-radius: 20px;
     margin: 10px 0 7px 0;
@@ -28,8 +35,8 @@
 }
 
 .spot-tile-img {
-    width: 300px;
-    height: 300px;
+    width: 280px;
+    height: 280px;
 }
 
 .fa-solid {
@@ -63,13 +70,16 @@
 
 
 
+.grid-item:hover .img-container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
+}
 
 
 /* CAREFUL WHEN TOUCHING THESE */
-.img-container:hover, .flex-item img:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
+/* .img-container:hover, .flex-item img:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+} */
 
 
 

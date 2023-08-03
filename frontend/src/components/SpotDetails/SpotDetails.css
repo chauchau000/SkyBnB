@@ -24,14 +24,15 @@
         "img1 img4 img5";
     grid-template-columns: 2fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    gap: 5px;
+    gap: 7px;
     overflow: hidden;
-    margin: 10px 0;
+    margin: 15px 0;
+    border-radius: 15px;
 }
 .house-images {
     object-fit: cover;
     display: block;
-    border-radius: 10px;
+
 }
 
 .preview-false {
@@ -80,10 +81,11 @@
 
 #price-reviews-container {
     display: block;
-    border: 3px solid black;
+    border: 2px solid rgba(161, 153, 153, 0.31);
     border-radius: 20px;
     height: 120px;
     padding: 15px 20px 20px 20px;
+    box-shadow: 0px 0px 7px 3px rgba(184, 171, 184, 0.256);
 }
 
 #price-review-inline-block {
@@ -122,7 +124,8 @@ button#reserve {
 }
 
 .review-container {
-    border-top: 2px solid black;
+    border-top: 1px solid rgba(161, 153, 153, 0.505);;
+    margin: 20px 0;
     padding: 10px 0;
 }
 

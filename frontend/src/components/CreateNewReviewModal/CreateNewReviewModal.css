@@ -8,8 +8,8 @@
     padding: 25px;
     z-index: 1000;
     box-sizing: border-box;
-    border: solid 2px rgb(193, 193, 193);
-    border-radius: 50px;
+    border: solid 2px black;
+    border-radius: 10px;
     box-shadow: 5px 5px 5px rgb(168, 161, 161);
 }
 
@@ -33,6 +33,10 @@
     width: 320px;
     border-top: 1px solid black;
     box-sizing: border-box;
+    resize: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 8px;
 }
 
 .stars-container {

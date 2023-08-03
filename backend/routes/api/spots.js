@@ -98,7 +98,6 @@ router.get('/', validateQueries, async (req, res, next) => {
 
     if (maxPrice) where.price = { [Op.lte]: maxPrice }
     if (minPrice) where.price = { ...where.price, [Op.gte]: minPrice }
-    // console.log("this is the where object", where)
 
     const allSpots = await Spot.findAll({
         where,
@@ -174,7 +173,6 @@ router.get('/:spotId', async (req, res, next) => {
         },
         group: ["Spot.id", "Owner.id", "SpotImages.id"],
     });
-    console.log(spotResult)
     spotResult.dataValues.avgStarRating = Number(spotResult.dataValues.avgStarRating).toFixed(2)
 
 
