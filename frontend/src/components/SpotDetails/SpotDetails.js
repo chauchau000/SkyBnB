@@ -90,7 +90,7 @@ function SpotDetails() {
                 <div id='price-reviews-container'>
                     <div id='price-review-inline-block'>
                         <p><span className='price-tag'>${spot?.price}</span> night</p>
-                        {spot?.numReviews ?
+                        {spot?.avgStarRating !== '0.00' ?
                             <span className='rating-reviews'><i className="fa-solid fa-star"></i> {spot?.avgStarRating} · {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
                             :
                             <span className='rating-reviews'><i className="fa-solid fa-star"></i>New</span>
@@ -106,7 +106,7 @@ function SpotDetails() {
             <div className='review-container'>
                 <div>
                     <h2>
-                        {spot?.numReviews ?
+                        {spot?.avgStarRating !== '0.00' ?
                             <span><i className="fa-solid fa-star"></i> {spot?.avgStarRating} <span id='dot-span'>·</span> {spot?.numReviews} {spot?.numReviews > 1 ? 'reviews' : 'review'}</span>
                             :
                             <span><i className="fa-solid fa-star"></i>New</span>
