@@ -16,6 +16,7 @@
 }
 .text-paragraphs {
     width: 610px;
+    overflow: hidden;
 }
 
 #spot-details-img-container {
@@ -32,6 +33,7 @@
     margin: 15px 0;
     border-radius: 15px;
 }
+
 .house-images {
     object-fit: cover;
     display: block;
