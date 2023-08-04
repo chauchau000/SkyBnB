@@ -29,7 +29,21 @@ function SpotDetails() {
     let spotImages;
     if (spot?.SpotImages) {
         spotImages = spot?.SpotImages?.map((image, index) => {
-            return <img key={`${image.id}`} id={`house-img-${index + 1}`} className={`house-images preview-${image.preview}`} src={image.url} alt={`house${image.id}`} />
+            if (image.preview) {
+                return <img key={`${image.id}`}
+                    id={`house-img-preview`}
+                    className={`house-images preview-${image.preview}`}
+                    src={image.url}
+                    alt={`house${image.id}`}
+                />
+            } else {
+                return <img key={`${image.id}`}
+                    id={`house-img-${index + 1}`}
+                    className={`house-images preview-${image.preview}`}
+                    src={image.url}
+                    alt={`house${image.id}`}
+                />
+            }
         })
     }
 
@@ -45,16 +59,16 @@ function SpotDetails() {
                     <p className='review-user-firstName'>{review.User?.firstName}</p>
                     <p className='review-date'>{getMonthName(monthNum)} {year}</p>
                     <p className='review-description'>{review?.review}</p>
-                    {sessionUser?.id === review?.User?.id && (                            
-                            <OpenModalButton
-                                buttonText='Delete'
-                                modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId}/>}
-                            />)}
+                    {sessionUser?.id === review?.User?.id && (
+                        <OpenModalButton
+                            buttonText='Delete'
+                            modalComponent={<DeleteReviewModal reviewId={review.id} spotId={spotId} />}
+                        />)}
                 </div>
             )
         })
     } else {
-        if (sessionUser && (sessionUser?.id !== spot?.Owner?.id)){
+        if (sessionUser && (sessionUser?.id !== spot?.Owner?.id)) {
 
             reviewItems = <div className='review-item-container'><p>Be the first to post a review!</p></div>
         }
