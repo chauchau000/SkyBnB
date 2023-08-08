@@ -12,11 +12,11 @@
     padding: 10px 60px;
 }
 
-#airbnb-icon {
+#skybnb-icon {
     transform: rotateX(180deg);
 }
 
-#airbnb-icon ~ span {
+#skybnb-icon ~ span {
     color: red;
     padding-left: 4px;
 }
